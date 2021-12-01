@@ -186,7 +186,7 @@ function GlobalStoreContextProvider(props) {
                         if (response.data.success) {
                             let pairsArray = response.data.idNamePairs;
                             for(let i = 0; i < pairsArray.length; i++) {
-                                if(pairsArray[i].ownerEmail !== auth.user.email) {
+                                if(pairsArray[i].username !== auth.user.username) {
                                     pairsArray.splice(i, 1);
                                     i--;
                                 }
@@ -223,7 +223,7 @@ function GlobalStoreContextProvider(props) {
         let payload = {
             name: newListName,
             items: ["?", "?", "?", "?", "?"],
-            ownerEmail: auth.user.email
+            ownerUsername: auth.user.username
         };
         const response = await api.createTop5List(payload);
         if (response.data.success) {
@@ -249,7 +249,7 @@ function GlobalStoreContextProvider(props) {
         if (response.data.success) {
             let pairsArray = response.data.idNamePairs;
             for(let i = 0; i < pairsArray.length; i++) {
-                if(pairsArray[i].ownerEmail !== auth.user.email) {
+                if(pairsArray[i].ownerUsername !== auth.user.username) {
                     pairsArray.splice(i, 1);
                     i--;
                 }
