@@ -27,7 +27,7 @@ export default function SignInSide() {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
     auth.loginUser({
-        email: formData.get('username'),
+        username: formData.get('username'),
         password: formData.get('password'),
     }, store);
 };

@@ -3,8 +3,9 @@ import Button from '@mui/material/Button';
 import { Link } from 'react-router-dom'
 import Copyright from './Copyright'
 
-
-
+function handleGuest() {
+    console.log("Guest");
+}
 export default function SplashScreen() {
     return (
         <div id="splash-screen">
@@ -31,7 +32,7 @@ export default function SplashScreen() {
                     fontSize: "18px",
                     margin: "18px"                    
                 }} component={Link} to = "/login"> Login </Button>
-                <Button style = {{
+                <Button onClick = {handleGuest} style = {{
                     borderRadius: 35,
                     color: "black",
                     backgroundColor: "#abdba0",

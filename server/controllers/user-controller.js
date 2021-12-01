@@ -21,8 +21,8 @@ getLoggedIn = async (req, res) => {
 
 registerUser = async (req, res) => {
     try {
-        const { firstName, lastName, email, password, passwordVerify } = req.body;
-        if (!firstName || !lastName || !email || !password || !passwordVerify) {
+        const { firstName, lastName, username, password, passwordVerify } = req.body;
+        if (!firstName || !lastName || !username || !password || !passwordVerify) {
             return res
                 .status(400)
                 .json({ errorMessage: "Please enter all required fields." });
@@ -41,13 +41,13 @@ registerUser = async (req, res) => {
                     errorMessage: "Please enter the same password twice."
                 });
         }
-        const existingUser = await User.findOne({ email: email });
+        const existingUser = await User.findOne({ username: username });
         if (existingUser) {
             return res
                 .status(400)
                 .json({
                     success: false,
-                    errorMessage: "An account with this email address already exists."
+                    errorMessage: "An account with this username already exists."
                 });
         }
         const saltRounds = 10;
@@ -55,7 +55,7 @@ registerUser = async (req, res) => {
         const passwordHash = await bcrypt.hash(password, salt);
 
         const newUser = new User({
-            firstName, lastName, email, passwordHash
+            firstName, lastName, username, passwordHash
         });
         const savedUser = await newUser.save();
 
@@ -81,19 +81,19 @@ registerUser = async (req, res) => {
 }
 loginUser = async (req, res) => {
     try {
-        const { email, password} = req.body;
-        if (!email || !password) {
+        const { username, password} = req.body;
+        if (!username || !password) {
             return res
                 .status(400)
                 .json({ errorMessage: "Please enter all required fields." });
         }
-        const existingUser = await User.findOne({ email: email });
+        const existingUser = await User.findOne({ username: username });
         if(!existingUser) {
             return res
                 .status(400)
                 .json({
                     success: false,
-                    errorMessage: "Email Not Found. Create an Account. "
+                    errorMessage: "Username Not Found. Create an Account. "
                 })
         }
         const passwordCorrect = await bcrypt.compare(password, existingUser.passwordHash);
@@ -116,7 +116,7 @@ loginUser = async (req, res) => {
             user: {
                 firstName: existingUser.firstName,
                 lastName: existingUser.lastName,
-                email: existingUser.email
+                username: existingUser.username
             }
         });
     } catch (err) {
