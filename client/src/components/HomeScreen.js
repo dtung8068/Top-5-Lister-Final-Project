@@ -16,10 +16,6 @@ const HomeScreen = () => {
     useEffect(() => {
         store.loadIdNamePairs();
     }, []);
-
-    function handleCreateNewList() {
-        store.createNewList();
-    }
     let listCard = "";
     if (store) {
         listCard = 
@@ -38,16 +34,6 @@ const HomeScreen = () => {
     return (
         <div id="top5-list-selector">
             <div id="list-selector-heading">
-            <Fab 
-                color="primary" 
-                disabled={store.isListNameEditActive}
-                aria-label="add"
-                id="add-list-button"
-                onClick={handleCreateNewList}
-            >
-                <AddIcon />
-            </Fab>
-                <Typography variant="h2">Your Lists</Typography>
             </div>
             <div id="list-selector-list">
                 {
