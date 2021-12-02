@@ -12,6 +12,7 @@ export default function SplashScreen() {
     const handleGuest = (event) => {
         event.preventDefault();
         auth.handleGuest(store);
+        store.updateCurrentIcon("Community");
     };
     return (
         <div id="splash-screen">

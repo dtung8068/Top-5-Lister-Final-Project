@@ -29,6 +29,7 @@ export default function AppBanner() {
     const handleLogout = () => {
         handleMenuClose();
         store.closeCurrentList();
+        store.updateCurrentIcon("Home");
         auth.logoutUser(auth.user);
     }
 

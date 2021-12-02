@@ -18,16 +18,16 @@ function MenuBar() {
     const { store } = useContext(GlobalStoreContext);
     const { auth } = useContext(AuthContext);
     function handleHomeClick() {
-        console.log("Home");
+        store.updateCurrentIcon("Home");
     }
     function handleGroupsClick() {
-        console.log("Home");
+        store.updateCurrentIcon("All Lists");
     }
     function handlePersonClick() {
-        console.log("Home");
+        store.updateCurrentIcon("Users");
     }
     function handleFunctionClick() {
-        console.log("Home");
+        store.updateCurrentIcon("Community");
     }
     function handleSortMenuOpen() {
         console.log("Home");
@@ -39,11 +39,18 @@ function MenuBar() {
         width: 50,
         height: 50,
     }} onClick ={handleHomeClick}> </HomeIcon>
+    if(store.currentIcon === 'Home') {
+        homeIcon = <HomeIcon className="menuIcon" style={{
+            width: 50,
+            height: 50,
+            borderColor: '#008000'
+        }} onClick ={handleHomeClick}> </HomeIcon>
+    }
     if(auth.guest){
         homeIcon = <HomeIcon className="menuIconDisabled" style={{
             width: 50,
             height: 50,
-        }} onClick ={handleHomeClick}> </HomeIcon>
+        }}> </HomeIcon>
     }
     return (
         <div id="menubar">

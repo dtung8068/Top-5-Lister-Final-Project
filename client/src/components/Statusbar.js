@@ -18,22 +18,42 @@ function Statusbar() {
         store.createNewList();
     }
     let text ="Your Lists";
-    //if (store.currentList)
-    //    text = store.currentList.name;
-    return (
-        <div id="top5-statusbar">
-            <Fab 
-                color="primary" 
-                disabled={store.isListNameEditActive}
-                aria-label="add"
-                id="add-list-button"
-                onClick={handleCreateNewList}
-            >
-                <AddIcon />
-            </Fab>
-            <Typography variant="h2">{text}</Typography>
-        </div>
-    );
+    if (store.currentIcon === "Home") {
+        text = "Your Lists";
+    }
+    if (store.currentIcon === "All Lists") {
+        text = "All Lists";
+    }
+    if (store.currentIcon === "Users") {
+        text = "User Lists";
+    }
+    if (store.currentIcon === "Community") {
+        text = "Community Lists";
+    }
+    if(text === "Your Lists") {
+        return (
+            <div id="top5-statusbar">
+                <Fab 
+                    color="primary" 
+                    disabled={store.isListNameEditActive || auth.guest}
+                    aria-label="add"
+                    id="add-list-button"
+                    onClick={handleCreateNewList}
+                >
+                    <AddIcon />
+                </Fab>
+                <Typography variant="h2">{text}</Typography>
+            </div>
+        );
+    }
+    else {
+        return (
+            <div id="top5-statusbar">
+                <Typography variant="h2">{text}</Typography>
+            </div>
+        );
+    }
+
 }
 
 export default Statusbar;

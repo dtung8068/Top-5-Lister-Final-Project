@@ -94,6 +94,7 @@ function AuthContextProvider(props) {
                     user: null, 
                     errorMessage: null,
                     open: false,
+                    guest: false,
                 }
             });
         }
@@ -195,7 +196,6 @@ function AuthContextProvider(props) {
                     }
                 })
                 history.push("/");
-                store.loadIdNamePairs();
             }
         } catch (err) {
             authReducer({
