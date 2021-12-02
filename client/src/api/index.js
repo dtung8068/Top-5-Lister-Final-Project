@@ -32,7 +32,8 @@ export const getTop5ListById = (id) => api.get(`/top5list/${id}`)
 export const getLoggedIn = () => api.get(`/loggedIn/`);
 export const registerUser = (payload) => api.post(`/register/`, payload)
 export const loginUser = (payload) => api.post(`/login/`, payload)
-export const logoutUser = () => api.get(`/logout/`)
+export const loginGuest = () => api.post(`/loginGuest/`)
+export const logoutUser = (user) => api.get(`/logout/`, user)
 
 const apis = {
     createTop5List,
@@ -45,6 +46,7 @@ const apis = {
     getLoggedIn,
     registerUser,
     loginUser,
+    loginGuest,
     logoutUser
 }
 

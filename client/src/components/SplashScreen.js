@@ -2,11 +2,17 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import { Link } from 'react-router-dom'
 import Copyright from './Copyright'
+import { useContext } from 'react';
+import { GlobalStoreContext } from '../store';
+import AuthContext from '../auth'
 
-function handleGuest() {
-    console.log("Guest");
-}
 export default function SplashScreen() {
+    const { auth } = useContext(AuthContext);
+    const { store } = useContext(GlobalStoreContext);
+    const handleGuest = (event) => {
+        event.preventDefault();
+        auth.handleGuest(store);
+    };
     return (
         <div id="splash-screen">
             <h1>Welcome To The Top 5 Lister</h1>

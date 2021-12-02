@@ -29,7 +29,7 @@ export default function AppBanner() {
     const handleLogout = () => {
         handleMenuClose();
         store.closeCurrentList();
-        auth.logoutUser();
+        auth.logoutUser(auth.user);
     }
 
     const menuId = 'primary-search-account-menu';

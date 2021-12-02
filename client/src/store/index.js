@@ -38,6 +38,7 @@ function GlobalStoreContextProvider(props) {
     // THESE ARE ALL THE THINGS OUR DATA STORE WILL MANAGE
     const [store, setStore] = useState({
         idNamePairs: [],
+        currentIcon: null, 
         currentList: null,
         newListCounter: 0,
         listNameActive: false,
@@ -186,7 +187,7 @@ function GlobalStoreContextProvider(props) {
                         if (response.data.success) {
                             let pairsArray = response.data.idNamePairs;
                             for(let i = 0; i < pairsArray.length; i++) {
-                                if(pairsArray[i].username !== auth.user.username) {
+                                if(pairsArray[i].ownerUsername !== auth.user.username) {
                                     pairsArray.splice(i, 1);
                                     i--;
                                 }

@@ -11,7 +11,7 @@ getLoggedIn = async (req, res) => {
                 user: {
                     firstName: loggedInUser.firstName,
                     lastName: loggedInUser.lastName,
-                    email: loggedInUser.email
+                    username: loggedInUser.username
                 }
             }); //HTTP Headers Sent ERROR.
         }
@@ -71,7 +71,7 @@ registerUser = async (req, res) => {
             user: {
                 firstName: savedUser.firstName,
                 lastName: savedUser.lastName,
-                email: savedUser.email
+                username: savedUser.username
             }
         });
     } catch (err) {
@@ -124,9 +124,37 @@ loginUser = async (req, res) => {
         res.status(500).send();
     }
 }
+loginGuest = async (req, res) => {
+    try {
+        const firstName = 'guest';
+        const lastName = 'guest';
+        const username = 'guest';
+        const passwordHash = 'guest';
+        const guestUser = new User({
+            firstName, lastName, username, passwordHash
+        });
+        const token = auth.signToken(guestUser);
+        await res.cookie("token", token, {
+            httpOnly: true,
+            secure: true,
+            sameSite: "none"
+        }).status(200).json({
+            success: true,
+            user: {
+                firstName: guestUser.firstName,
+                lastName: guestUser.lastName,
+                username: guestUser.username
+            }
+        });
+    }
+    catch (err) {
+        console.error(err);
+        res.status(500).send();
+    }
+}
 logoutUser = async (req, res) => {
     auth.verify(req, res, async function () {
-        const loggedInUser = await User.findOne({ _id: req.userId });
+        const loggedInUser = req.body;
         const token = {};
         await res.cookie("token", token, {
             httpOnly: true,
@@ -137,7 +165,7 @@ logoutUser = async (req, res) => {
             user: {
                 firstName: loggedInUser.firstName,
                 lastName: loggedInUser.lastName,
-                email: loggedInUser.email
+                username: loggedInUser.username
             }
         });
     })
@@ -147,5 +175,6 @@ module.exports = {
     getLoggedIn,
     registerUser, 
     loginUser,
+    loginGuest,
     logoutUser,
 }

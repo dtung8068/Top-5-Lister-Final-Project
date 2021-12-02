@@ -1,4 +1,5 @@
 import { useContext } from 'react'
+import AuthContext from '../auth'
 import { GlobalStoreContext } from '../store'
 import Button from '@mui/material/Button';
 import UndoIcon from '@mui/icons-material/Undo';
@@ -13,6 +14,7 @@ import CloseIcon from '@mui/icons-material/HighlightOff';
 */
 function EditToolbar() {
     const { store } = useContext(GlobalStoreContext);
+    const { auth } = useContext(AuthContext);
 
     function handleUndo() {
         store.undo();
@@ -23,6 +25,9 @@ function EditToolbar() {
     function handleClose() {
         store.closeCurrentList();
     }
+    if(!auth.loggedIn) {
+        return null
+    };
     let editStatus = false;
     if (store.isItemEditActive) {
         editStatus = true;

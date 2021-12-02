@@ -7,6 +7,7 @@ import {
     AppBanner,
     HomeWrapper,
     LoginScreen,
+    MenuBar,
     RegisterScreen,
     Statusbar,
     WorkspaceScreen
@@ -28,6 +29,7 @@ const App = () => {
             <AuthContextProvider>
                 <GlobalStoreContextProvider>              
                     <AppBanner />
+                    <MenuBar />
                     <Switch>
                         <Route path="/" exact component={HomeWrapper} />
                         <Route path="/login/" exact component={LoginScreen} />

@@ -18,11 +18,13 @@ function AuthContextProvider(props) {
         loggedIn: false,
         errorMessage: null,
         open: false,
+        guest: false,
     });
     const history = useHistory();
 
     useEffect(() => { //ComponentDidMount
         auth.getLoggedIn();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const authReducer = (action) => {
@@ -34,6 +36,7 @@ function AuthContextProvider(props) {
                     loggedIn: payload.loggedIn, 
                     errorMessage: payload.errorMessage,
                     open: payload.open,
+                    guest: payload.guest,
                 });
             }
             case AuthActionType.REGISTER_USER: {
@@ -42,7 +45,7 @@ function AuthContextProvider(props) {
                     loggedIn: true, 
                     errorMessage: payload.errorMessage,
                     open: false,
-                    
+                    guest: payload.guest,
                 })
             }
             case AuthActionType.LOGIN_USER: {
@@ -51,7 +54,7 @@ function AuthContextProvider(props) {
                     loggedIn: true, 
                     errorMessage: payload.errorMessage,
                     open: false,
-                    
+                    guest: payload.guest,
                 })
             }
             case AuthActionType.LOGOUT_USER: {
@@ -60,6 +63,7 @@ function AuthContextProvider(props) {
                     loggedIn: false, 
                     errorMessage: payload.errorMessage,
                     open: false,
+                    guest: false,
                 })
             }
             default:
@@ -78,6 +82,7 @@ function AuthContextProvider(props) {
                         user: response.data.user, 
                         errorMessage: null,
                         open: false,
+                        guest: auth.guest,
                     }
                 });
             }
@@ -103,7 +108,8 @@ function AuthContextProvider(props) {
                     type: AuthActionType.REGISTER_USER,
                     payload: {
                         user: response.data.user, 
-                        errorMessage: null
+                        errorMessage: null,
+                        guest: false,
                     }
                 })
                 history.push("/");
@@ -133,7 +139,8 @@ function AuthContextProvider(props) {
                 authReducer({
                     type: AuthActionType.LOGIN_USER,
                     payload: {
-                        user: response.data.user
+                        user: response.data.user,
+                        guest: false,
                     }
                 })
                 history.push("/");
@@ -152,8 +159,8 @@ function AuthContextProvider(props) {
         }
 
     }
-    auth.logoutUser = async function() {
-        const response = await api.logoutUser();
+    auth.logoutUser = async function(user) {
+        const response = await api.logoutUser(user);
         if (response.status === 200) {
             authReducer({
                 type: AuthActionType.LOGOUT_USER,
@@ -175,6 +182,30 @@ function AuthContextProvider(props) {
                 open: false
             }
         })
+    }
+    auth.handleGuest = async function(store) {
+        try {
+            const response = await api.loginGuest();      
+            if (response.status === 200) {
+                authReducer({
+                    type: AuthActionType.LOGIN_USER,
+                    payload: {
+                        user: response.data.user,
+                        guest: true,
+                    }
+                })
+                history.push("/");
+                store.loadIdNamePairs();
+            }
+        } catch (err) {
+            authReducer({
+                type: AuthActionType.GET_LOGGED_IN,
+                payload: {
+                    user: null, 
+                    loggedIn: false,
+                }
+            })
+        }
     }
 
 
