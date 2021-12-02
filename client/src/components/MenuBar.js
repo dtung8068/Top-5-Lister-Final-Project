@@ -39,7 +39,7 @@ function MenuBar() {
         width: 50,
         height: 50,
     }} onClick ={handleHomeClick}> </HomeIcon>
-    if(store.isItemEditActive){
+    if(auth.guest){
         homeIcon = <HomeIcon className="menuIconDisabled" style={{
             width: 50,
             height: 50,
