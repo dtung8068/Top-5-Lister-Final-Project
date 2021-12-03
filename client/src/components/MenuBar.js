@@ -17,6 +17,7 @@ import { Typography } from '@mui/material';
 function MenuBar() {
     const { store } = useContext(GlobalStoreContext);
     const { auth } = useContext(AuthContext);
+    let text = "";
     function handleHomeClick() {
         store.updateCurrentIcon("Home");
     }
@@ -31,6 +32,14 @@ function MenuBar() {
     }
     function handleSortMenuOpen() {
         console.log("Home");
+    }
+    async function handleKeyPress(event) {
+        if (event.code === "Enter") {
+            store.handleSearch(text);
+        }
+    }
+    function handleUpdateText(event) {
+        text = event.target.value;
     }
     if(!auth.loggedIn) {
         return null
@@ -67,7 +76,9 @@ function MenuBar() {
                 width: 50,
                 height: 50,
             }} onClick ={handleFunctionClick}> </FunctionsIcon>
-            <TextField style={{
+            <TextField onChange={handleUpdateText}
+            onKeyPress={handleKeyPress}
+            style={{
                 width: "50%",
             }} id="outlined-basic" label="Search" variant="outlined" />
             <Typography style = {{

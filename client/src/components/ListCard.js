@@ -71,17 +71,18 @@ function ListCard(props) {
                 width: '100%'
             }}
         >
-                <Box sx={{ p: 1, flexGrow: 1 }}>{idNamePair.name}</Box>
+                <Box sx={{ p: 1, flexGrow: 1, fontSize:'16pt'}}>{idNamePair.name}</Box>
+                <Box sx={{ fontSize:'16pt'}}>By: {idNamePair.ownerUsername}</Box>
                 <Box sx={{ p: 1 }}>
                     <IconButton onClick={handleToggleEdit} aria-label='edit'>
-                        <EditIcon style={{fontSize:'48pt'}} />
+                        <EditIcon style={{fontSize:'32pt'}} />
                     </IconButton>
                 </Box>
                 <Box sx={{ p: 1 }}>
                     <IconButton onClick={(event) => {
                         handleDeleteList(event, idNamePair._id)
                     }} aria-label='delete'>
-                        <DeleteIcon style={{fontSize:'48pt'}} />
+                        <DeleteIcon style={{fontSize:'32pt'}} />
                     </IconButton>
                 </Box>
         </ListItem>

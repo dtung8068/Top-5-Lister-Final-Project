@@ -2,7 +2,8 @@ import React, { useContext, useEffect } from 'react'
 import { GlobalStoreContext } from '../store'
 import ListCard from './ListCard.js'
 import List from '@mui/material/List';
-import DeleteModal from './DeleteModal'
+import DeleteModal from './DeleteModal';
+//import MenuBar from './MenuBar';
 /*
     This React component lists all the top5 lists in the UI.
     

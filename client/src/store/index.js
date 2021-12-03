@@ -27,7 +27,8 @@ export const GlobalStoreActionType = {
     SET_CURRENT_ICON: "SET_CURRENT_ICON",
     SET_CURRENT_LIST: "SET_CURRENT_LIST",
     SET_ITEM_EDIT_ACTIVE: "SET_ITEM_EDIT_ACTIVE",
-    SET_LIST_NAME_EDIT_ACTIVE: "SET_LIST_NAME_EDIT_ACTIVE"
+    SET_LIST_NAME_EDIT_ACTIVE: "SET_LIST_NAME_EDIT_ACTIVE",
+    SET_SEARCH_TEXT: "SET_SEARCH_TEXT"
 }
 
 // WE'LL NEED THIS TO PROCESS TRANSACTIONS
@@ -46,12 +47,11 @@ function GlobalStoreContextProvider(props) {
         itemActive: false,
         listMarkedForDeletion: null,
         listMarkedForDeletionName: null,
+        searchText: "",
     });
-    const history = useHistory();
-
+    const history = useHistory()
     // SINCE WE'VE WRAPPED THE STORE IN THE AUTH CONTEXT WE CAN ACCESS THE USER HERE
     const { auth } = useContext(AuthContext);
-
     // HERE'S THE DATA STORE'S REDUCER, IT MUST
     // HANDLE EVERY TYPE OF STATE CHANGE
     const storeReducer = (action) => {
@@ -68,6 +68,7 @@ function GlobalStoreContextProvider(props) {
                     listMarkedForDeletion: null,
                     listMarkedForDeletionName: null,
                     currentIcon: store.currentIcon,
+                    searchText: store.searchText,
                 });
             }
             // STOP EDITING THE CURRENT LIST
@@ -81,6 +82,7 @@ function GlobalStoreContextProvider(props) {
                     listMarkedForDeletion: null,
                     listMarkedForDeletionName: null,
                     currentIcon: store.currentIcon,
+                    searchText: store.searchText,
                 })
             }
             // CREATE A NEW LIST
@@ -94,6 +96,7 @@ function GlobalStoreContextProvider(props) {
                     listMarkedForDeletion: null,
                     listMarkedForDeletionName: null,
                     currentIcon: store.currentIcon,
+                    searchText: store.searchText,
                 })
             }
             // GET ALL THE LISTS SO WE CAN PRESENT THEM
@@ -107,6 +110,7 @@ function GlobalStoreContextProvider(props) {
                     listMarkedForDeletion: null,
                     listMarkedForDeletionName: null,
                     currentIcon: store.currentIcon,
+                    searchText: store.searchText,
                 });
             }
             // PREPARE TO DELETE A LIST
@@ -120,6 +124,7 @@ function GlobalStoreContextProvider(props) {
                     listMarkedForDeletion: payload.id,
                     listMarkedForDeletionName: payload.name,
                     currentIcon: store.currentIcon,
+                    searchText: store.searchText,
                 });
             }
             // PREPARE TO DELETE A LIST
@@ -133,6 +138,7 @@ function GlobalStoreContextProvider(props) {
                     listMarkedForDeletion: null,
                     listMarkedForDeletionName: null,
                     currentIcon: store.currentIcon,
+                    searchText: store.searchText,
                 });
             }
             // UPDATE A LIST
@@ -146,6 +152,7 @@ function GlobalStoreContextProvider(props) {
                     listMarkedForDeletion: null,
                     listMarkedForDeletionName: null,
                     currentIcon: store.currentIcon,
+                    searchText: store.searchText,
                 });
             }
             // START EDITING A LIST ITEM
@@ -159,6 +166,7 @@ function GlobalStoreContextProvider(props) {
                     listMarkedForDeletion: null,
                     listMarkedForDeletionName: null,
                     currentIcon: store.currentIcon,
+                    searchText: store.searchText,
                 });
             }
             // START EDITING A LIST NAME
@@ -172,8 +180,10 @@ function GlobalStoreContextProvider(props) {
                     listMarkedForDeletion: null,
                     listMarkedForDeletionName: null,
                     currentIcon: store.currentIcon,
+                    searchText: store.searchText,
                 });
             }
+            //Set Current Icon. 
             case GlobalStoreActionType.SET_CURRENT_ICON: {
                 return setStore({
                     idNamePairs: store.idNamePairs,
@@ -183,7 +193,22 @@ function GlobalStoreContextProvider(props) {
                     isItemEditActive: store.isItemEditActive,
                     listMarkedForDeletion: store.listMarkedForDeletion,
                     listMarkedForDeletionName: store.listMarkedForDeletionName,
-                    currentIcon: payload
+                    currentIcon: payload,
+                    searchText: store.searchText,
+                });
+            }
+            //Set Search Text.  
+            case GlobalStoreActionType.SET_SEARCH_TEXT: {
+                return setStore({
+                    idNamePairs: store.idNamePairs,
+                    currentList: store.currentList,
+                    newListCounter: store.newListCounter,
+                    isListNameEditActive: store.isListNameEditActive,
+                    isItemEditActive: store.isItemEditActive,
+                    listMarkedForDeletion: store.listMarkedForDeletion,
+                    listMarkedForDeletionName: store.listMarkedForDeletionName,
+                    currentIcon: store.currentIcon,
+                    searchText: payload,
                 });
             }
             default:
@@ -228,12 +253,6 @@ function GlobalStoreContextProvider(props) {
             updateList(top5List);
         }
     }
-    store.updateCurrentIcon = function (currentIcon) {
-        storeReducer({
-            type: GlobalStoreActionType.SET_CURRENT_ICON,
-            payload: currentIcon
-        });
-    }
     // THIS FUNCTION PROCESSES CLOSING THE CURRENTLY LOADED LIST
     store.closeCurrentList = function () {
         storeReducer({
@@ -276,10 +295,54 @@ function GlobalStoreContextProvider(props) {
         const response = await api.getTop5ListPairs();
         if (response.data.success) {
             let pairsArray = response.data.idNamePairs;
-            for(let i = 0; i < pairsArray.length; i++) {
-                if(pairsArray[i].ownerUsername !== auth.user.username) {
-                    pairsArray.splice(i, 1);
-                    i--;
+            //Splice by Username
+            //if(store.currentIcon === "Home") {
+            //    for(let i = 0; i < pairsArray.length; i++) {
+            //        if(pairsArray[i].ownerUsername !== auth.user.username) {
+            //            pairsArray.splice(i, 1);
+            //            i--;
+            //        }
+            //    }
+            //}
+            //Splice by Search
+            //if(store.searchText !== "") {
+            //    for(let i = 0; i < pairsArray.length; i++) {
+            //        if(!pairsArray[i].name.startsWith(store.searchText)) {
+            //            pairsArray.splice(i, 1);
+            //            i--;
+            //        }
+            //    }
+           // }
+            storeReducer({
+                type: GlobalStoreActionType.LOAD_ID_NAME_PAIRS,
+                payload: pairsArray
+            });
+            
+        }
+        else {
+            console.log("API FAILED TO GET THE LIST PAIRS");
+        }
+    }
+    store.loadSearchPairs = async function (text) {
+        const response = await api.getTop5ListPairs();
+        if (response.data.success) {
+            let pairsArray = response.data.idNamePairs;
+            //Splice by Username
+            if(store.currentIcon === "Home") {
+                for(let i = 0; i < pairsArray.length; i++) {
+                    if(pairsArray[i].ownerUsername !== auth.user.username) {
+                        pairsArray.splice(i, 1);
+                        i--;
+                    }
+                }
+            }
+            //Splice by Search
+            if(text !== "") {
+                for(let i = 0; i < pairsArray.length; i++) {
+                    if(!pairsArray[i].name.startsWith(text)) {
+                        pairsArray.splice(i, 1);
+                        i--;
+                    }
                 }
             }
             storeReducer({
@@ -291,6 +354,19 @@ function GlobalStoreContextProvider(props) {
         else {
             console.log("API FAILED TO GET THE LIST PAIRS");
         }
+    }
+    store.handleSearch = function (text) {
+        storeReducer({
+            type: GlobalStoreActionType.SET_SEARCH_TEXT,
+            payload: text
+        });
+        store.loadSearchPairs(text);
+    }
+    store.updateCurrentIcon = function (currentIcon) {
+        storeReducer({
+            type: GlobalStoreActionType.SET_CURRENT_ICON,
+            payload: currentIcon
+        });
     }
 
     // THE FOLLOWING 5 FUNCTIONS ARE FOR COORDINATING THE DELETION
