@@ -221,11 +221,12 @@ function GlobalStoreContextProvider(props) {
     // RESPONSE TO EVENTS INSIDE OUR COMPONENTS.
 
     // THIS FUNCTION PROCESSES CHANGING A LIST NAME
-    store.changeListName = async function (id, newName) {
+    store.changeList = async function (id, newName, newItems) {
         let response = await api.getTop5ListById(id);
         if (response.data.success) {
             let top5List = response.data.top5List;
             top5List.name = newName;
+            top5List.items = newItems;
             async function updateList(top5List) {
                 response = await api.updateTop5ListById(top5List._id, top5List);
                 if (response.data.success) {
@@ -251,6 +252,7 @@ function GlobalStoreContextProvider(props) {
                 }
             }
             updateList(top5List);
+            history.push("/");
         }
     }
     // THIS FUNCTION PROCESSES CLOSING THE CURRENTLY LOADED LIST
