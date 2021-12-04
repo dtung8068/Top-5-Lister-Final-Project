@@ -48,8 +48,10 @@ function ListCard(props) {
     }
     let cardElement = <List sx={{
         border: "1.5px solid rgb(0, 0, 0)",
+        borderRadius: "5px",
+        backgroundColor: "#fffff1",
         p: 1,
-        mb: 1,
+        mb: 1, 
     }}>
         <ListItem
         id={idNamePair._id}
@@ -124,6 +126,8 @@ function ListCard(props) {
     if(expandActive) {
         cardElement = <List sx={{
             border: "1.5px solid rgb(0, 0, 0)",
+            borderRadius: "5px",
+            backgroundColor: "#fffff1",
             p: 1,
             mb: 1,
         }}>
@@ -211,7 +215,6 @@ function ListCard(props) {
         </ListItemIcon>
     </List>
 </Grid>
-
         <ListItem id={idNamePair._id}
             key={idNamePair._id}
             alignItems="flex-start"

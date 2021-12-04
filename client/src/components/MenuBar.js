@@ -48,11 +48,39 @@ function MenuBar() {
         width: 50,
         height: 50,
     }} onClick ={handleHomeClick}> </HomeIcon>
+    let allListsIcon = <GroupsIcon className="menuIcon" style={{
+        width: 50,
+        height: 50,
+        marginLeft: "10px",
+    }} onClick ={handleGroupsClick}> </GroupsIcon>
+    let userIcon = <PersonIcon className="menuIcon" style={{
+        width: 50,
+        height: 50,
+        marginLeft: "10px",
+    }} onClick ={handlePersonClick}> </PersonIcon>
     let communityIcon = <FunctionsIcon className="menuIcon" style={{
         width: 50,
         height: 50,
         marginLeft: "10px",
     }} onClick ={handleFunctionClick}> </FunctionsIcon>
+    let searchField = <TextField onChange={handleUpdateText}
+    onKeyPress={handleKeyPress}
+    style={{
+        width: "50%",
+    }} id="outlined-basic" label="Search" variant="outlined" />
+    let sortByIcon = <SortIcon className="menuIcon" style={{
+        width: 50,
+        height: 50,
+        display: "inline",
+        float: "right",
+        marginRight: "50px"
+    }} onClick = {handleSortMenuOpen}> </SortIcon>
+    let sortBy = <Typography style = {{
+        fontSize: 30,
+        display: "inline",
+        float: "right",
+        marginRight: "10px"
+    }}> Sort By </Typography>
     if(store.currentIcon === 'Home') {
         homeIcon = <HomeIcon className="menuIcon" style={{
             width: 50,
@@ -68,45 +96,56 @@ function MenuBar() {
             marginLeft: "10px",
         }} onClick ={handleFunctionClick}> </FunctionsIcon>
     }
-    if(auth.guest){
+    if(auth.guest || store.currentList){
         homeIcon = <HomeIcon className="menuIconDisabled" style={{
             width: 50,
             height: 50,
         }}> </HomeIcon>
     }
+    if(store.currentList){
+        allListsIcon = <GroupsIcon className="menuIconDisabled" style={{
+            width: 50,
+            height: 50,
+            marginLeft: "10px",
+        }}> </GroupsIcon>
+        userIcon = <PersonIcon className="menuIconDisabled" style={{
+            width: 50,
+            height: 50,
+            marginLeft: "10px",
+        }}> </PersonIcon>
+        communityIcon = <FunctionsIcon className="menuIconDisabled" style={{
+            width: 50,
+            height: 50,
+            marginLeft: "10px",
+        }}> </FunctionsIcon>
+        searchField = <TextField className = "menuIconDisabled"
+            style={{
+                width: "50%",
+                
+            }} id="outlined-basic" label="Search" variant="outlined" disabled />
+        sortByIcon = <SortIcon className="menuIconDisabled" style={{
+        width: 50,
+        height: 50,
+        display: "inline",
+        float: "right",
+        marginRight: "50px"
+    }} onClick = {handleSortMenuOpen}> </SortIcon>
+        sortBy = <Typography className="menuIconDisabled" style = {{
+        fontSize: 30,
+        display: "inline",
+        float: "right",
+        marginRight: "10px"
+    }}> Sort By </Typography>
+    }
     return (
         <div id="menubar">
             {homeIcon}
-            <GroupsIcon className="menuIcon" style={{
-                width: 50,
-                height: 50,
-                marginLeft: "10px",
-            }} onClick ={handleGroupsClick}> </GroupsIcon>
-            <PersonIcon className="menuIcon" style={{
-                width: 50,
-                height: 50,
-                marginLeft: "10px",
-            }} onClick ={handlePersonClick}> </PersonIcon>
+            {allListsIcon}
+            {userIcon}
             {communityIcon}
-            <TextField onChange={handleUpdateText}
-            onKeyPress={handleKeyPress}
-            style={{
-                width: "50%",
-            }} id="outlined-basic" label="Search" variant="outlined" />
-            <SortIcon className="menuIcon" style={{
-                width: 50,
-                height: 50,
-                display: "inline",
-                float: "right",
-                marginRight: "50px"
-            }} onClick = {handleSortMenuOpen}> </SortIcon>
-            <Typography style = {{
-                fontSize: 30,
-                display: "inline",
-                float: "right",
-                marginRight: "10px"
-            }}> Sort By </Typography>
-
+            {searchField}
+            {sortByIcon}
+            {sortBy}
         </div>
     )
 }

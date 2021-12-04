@@ -3,7 +3,6 @@ import { GlobalStoreContext } from '../store'
 import { Typography } from '@mui/material'
 import AuthContext from '../auth'
 import AddIcon from '@mui/icons-material/Add';
-import Button from '@mui/material/Button';
 /*
     Our Status bar React component goes at the bottom of our UI.
     
