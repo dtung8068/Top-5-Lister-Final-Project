@@ -30,7 +30,20 @@ function Statusbar() {
     if (store.currentIcon === "Community") {
         text = "Community Lists";
     }
-    if(text === "Your Lists") {
+    if(store.currentList) {
+        return (
+            <div id="top5-statusbar">
+                    <AddIcon className = "menuIconDisabled" sx ={{
+                        fontSize: "64px",
+                    }}
+                    color="gray" 
+                    disabled={store.isListNameEditActive || auth.guest}
+                    id="add-list-button" />
+                <Typography variant="h2" className = "menuIconDisabled">{text}</Typography>
+            </div>
+        );
+    }
+    else if(text === "Your Lists") {
         return (
             <div id="top5-statusbar">
                     <AddIcon className = "menuIcon" sx ={{
