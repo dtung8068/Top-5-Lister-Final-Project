@@ -296,14 +296,14 @@ function GlobalStoreContextProvider(props) {
         if (response.data.success) {
             let pairsArray = response.data.idNamePairs;
             //Splice by Username
-            //if(store.currentIcon === "Home") {
-            //    for(let i = 0; i < pairsArray.length; i++) {
-            //        if(pairsArray[i].ownerUsername !== auth.user.username) {
-            //            pairsArray.splice(i, 1);
-            //            i--;
-            //        }
-            //    }
-            //}
+            if(store.currentIcon === "Home") {
+                for(let i = 0; i < pairsArray.length; i++) {
+                    if(pairsArray[i].ownerUsername !== auth.user.username) {
+                        pairsArray.splice(i, 1);
+                        i--;
+                    }
+                }
+            }
             //Splice by Search
             //if(store.searchText !== "") {
             //    for(let i = 0; i < pairsArray.length; i++) {

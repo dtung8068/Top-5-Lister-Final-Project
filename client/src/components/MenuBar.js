@@ -48,12 +48,25 @@ function MenuBar() {
         width: 50,
         height: 50,
     }} onClick ={handleHomeClick}> </HomeIcon>
+    let communityIcon = <FunctionsIcon className="menuIcon" style={{
+        width: 50,
+        height: 50,
+        marginLeft: "10px",
+    }} onClick ={handleFunctionClick}> </FunctionsIcon>
     if(store.currentIcon === 'Home') {
         homeIcon = <HomeIcon className="menuIcon" style={{
             width: 50,
             height: 50,
-            borderColor: '#008000'
+            border: "5px solid rgb(0, 128, 0)"
         }} onClick ={handleHomeClick}> </HomeIcon>
+    }
+    if(store.currentIcon === "Community") {
+        communityIcon = <FunctionsIcon className="menuIcon" style={{
+            width: 50,
+            height: 50,
+            border: "5px solid rgb(0, 128, 0)",
+            marginLeft: "10px",
+        }} onClick ={handleFunctionClick}> </FunctionsIcon>
     }
     if(auth.guest){
         homeIcon = <HomeIcon className="menuIconDisabled" style={{
@@ -67,30 +80,33 @@ function MenuBar() {
             <GroupsIcon className="menuIcon" style={{
                 width: 50,
                 height: 50,
+                marginLeft: "10px",
             }} onClick ={handleGroupsClick}> </GroupsIcon>
             <PersonIcon className="menuIcon" style={{
                 width: 50,
                 height: 50,
+                marginLeft: "10px",
             }} onClick ={handlePersonClick}> </PersonIcon>
-            <FunctionsIcon className="menuIcon" style={{
-                width: 50,
-                height: 50,
-            }} onClick ={handleFunctionClick}> </FunctionsIcon>
+            {communityIcon}
             <TextField onChange={handleUpdateText}
             onKeyPress={handleKeyPress}
             style={{
                 width: "50%",
             }} id="outlined-basic" label="Search" variant="outlined" />
-            <Typography style = {{
-                fontSize: 30,
-                marginLeft: "200px",
-                display: 'inline',
-            }}> Sort By </Typography>
             <SortIcon className="menuIcon" style={{
-                marginLeft: "10px",
                 width: 50,
                 height: 50,
+                display: "inline",
+                float: "right",
+                marginRight: "50px"
             }} onClick = {handleSortMenuOpen}> </SortIcon>
+            <Typography style = {{
+                fontSize: 30,
+                display: "inline",
+                float: "right",
+                marginRight: "10px"
+            }}> Sort By </Typography>
+
         </div>
     )
 }

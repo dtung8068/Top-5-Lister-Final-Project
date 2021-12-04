@@ -1,8 +1,9 @@
 import { useContext } from 'react'
 import { GlobalStoreContext } from '../store'
-import { Fab, Typography } from '@mui/material'
+import { Typography } from '@mui/material'
 import AuthContext from '../auth'
 import AddIcon from '@mui/icons-material/Add';
+import Button from '@mui/material/Button';
 /*
     Our Status bar React component goes at the bottom of our UI.
     
@@ -33,15 +34,13 @@ function Statusbar() {
     if(text === "Your Lists") {
         return (
             <div id="top5-statusbar">
-                <Fab 
-                    color="primary" 
+                    <AddIcon className = "menuIcon" sx ={{
+                        fontSize: "64px",
+                    }}
+                    color="gray" 
                     disabled={store.isListNameEditActive || auth.guest}
-                    aria-label="add"
                     id="add-list-button"
-                    onClick={handleCreateNewList}
-                >
-                    <AddIcon />
-                </Fab>
+                    onClick={handleCreateNewList} />
                 <Typography variant="h2">{text}</Typography>
             </div>
         );
