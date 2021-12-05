@@ -221,12 +221,13 @@ function GlobalStoreContextProvider(props) {
     // RESPONSE TO EVENTS INSIDE OUR COMPONENTS.
 
     // THIS FUNCTION PROCESSES CHANGING A LIST NAME
-    store.changeList = async function (id, newName, newItems) {
+    store.changeList = async function (id, newName, newItems, newPublish) {
         let response = await api.getTop5ListById(id);
         if (response.data.success) {
             let top5List = response.data.top5List;
             top5List.name = newName;
             top5List.items = newItems;
+            top5List.published = newPublish;
             async function updateList(top5List) {
                 response = await api.updateTop5ListById(top5List._id, top5List);
                 if (response.data.success) {
@@ -272,7 +273,8 @@ function GlobalStoreContextProvider(props) {
         let payload = {
             name: newListName,
             items: ["?", "?", "?", "?", "?"],
-            ownerUsername: auth.user.username
+            ownerUsername: auth.user.username,
+            published: new Date(0),
         };
         const response = await api.createTop5List(payload);
         if (response.data.success) {

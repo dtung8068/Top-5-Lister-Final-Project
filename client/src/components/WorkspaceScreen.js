@@ -4,7 +4,6 @@ import List from '@mui/material/List';
 import { Typography } from '@mui/material'
 import { GlobalStoreContext } from '../store/index.js'
 import Button from '@mui/material/Button';
-//import ListItem from '@mui/material/ListItem';
 import TextField from '@mui/material/TextField';
 /*
     This React component lets us edit a loaded list, which only
@@ -16,17 +15,70 @@ function WorkspaceScreen() {
     const { store } = useContext(GlobalStoreContext);
     const [listName, setListName] = useState(store.currentList.name);
     const [listItems, setListItems] = useState(store.currentList.items);
+    const [publish, updatePublish] = useState(canPublish());
     let editItems = "";
     function handleSave() {
-        store.changeList(store.currentList._id, listName, listItems);
+        store.changeList(store.currentList._id, listName, listItems, new Date(0));
     }
-    function updateListName(event) {
+    function handlePublish() {
+        store.changeList(store.currentList._id, listName, listItems, new Date());
+    }
+    const updateListName = (event) => {
         setListName(event.target.value);
+        updatePublish(canPublish2(event.target.value));
     }
     const updateListItems = (event) => {
         let newArr = store.currentList.items;
         newArr[parseInt(event.target.id[5]) - 1] = event.target.value
         setListItems(newArr);
+        updatePublish(canPublish());
+    }
+    function canPublish() {
+        let temp = store.idNamePairs;
+        for(let i = 0; i < temp.length; i++) {
+            if(temp[i].published === "1970-01-01T00:00:00.000+00:00") {
+                temp.splice(i, 1);
+                i--;
+            }
+        }
+        for(let i = 0; i < temp.length; i++) {
+            if(temp[i].name === listName) {
+                return false;
+            }
+        }
+        if(listName === "" || listName[0] === " ") {
+            return false;
+        }
+        for(let i = 0; i < listItems.length; i++) {
+            if(listItems[i] === "" || listItems[i][0] === " ") {
+                return false;
+            }
+        }
+        
+        return true;
+    }
+    function canPublish2(name) {
+        let temp = store.idNamePairs;
+        for(let i = 0; i < temp.length; i++) {
+            if(temp[i].published === "1970-01-01T00:00:00.000+00:00") {
+                temp.splice(i, 1);
+                i--;
+            }
+        }
+        for(let i = 0; i < temp.length; i++) {
+            if(temp[i].name === name) {
+                return false;
+            }
+        }
+        if(name === "" || name[0] === " ") {
+            return false;
+        }
+        for(let i = 0; i < listItems.length; i++) {
+            if(listItems[i] === "" || listItems[i][0] === " ") {
+                return false;
+            }
+        }
+        return true;
     }
     if (store.currentList) {
         editItems = 
@@ -41,6 +93,26 @@ function WorkspaceScreen() {
                     ))
                 }
             </List>;
+    }
+    let publishButton = <Button disabled sx={{
+        mx: '-870px',
+        borderRadius: 35,
+        color: "black",
+        backgroundColor: "#abdba0",
+        padding: "18px 36px",
+        fontSize: "18px",
+        cursor: 'not-allowed',
+        opacity: 0.25,
+    }}> Publish </Button>
+    if(publish) {
+        publishButton = <Button sx={{
+            mx: '-870px',
+            borderRadius: 35,
+            color: "black",
+            backgroundColor: "#abdba0",
+            padding: "18px 36px",
+            fontSize: "18px",
+        }} onClick = {handlePublish}> Publish </Button>
     }
     return (
         <div id="top5-workspace">
@@ -68,16 +140,9 @@ function WorkspaceScreen() {
             padding: "18px 36px",
             fontSize: "18px",
         }} onClick = {handleSave}> Save </Button>
-        <Button sx={{
-            mx: '-870px',
-            borderRadius: 35,
-            color: "black",
-            backgroundColor: "#abdba0",
-            padding: "18px 36px",
-            fontSize: "18px",
-        }}> Publish </Button>
+        {publishButton}
         </div>
-
+        
     )
 }
 
