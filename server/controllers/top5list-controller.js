@@ -75,10 +75,13 @@ updateTop5List = async (req, res) => {
                 message: 'Top 5 List not found!',
             })
         }
-
         top5List.name = body.name
         top5List.items = body.items
         top5List.published = body.published
+        top5List.likes = body.likes
+        top5List.dislikes = body.dislikes
+        top5List.views = body.views
+        top5List.comments = body.comments
         top5List
             .save()
             .then(() => {
@@ -181,6 +184,10 @@ getTop5ListPairs = async (req, res) => {
                     ownerUsername: list.ownerUsername,
                     items: list.items,
                     published: list.published,
+                    likes: list.likes,
+                    dislikes: list.dislikes,
+                    views: list.views,
+                    comments: list.comments,
                 };
                 pairs.push(pair);
             }

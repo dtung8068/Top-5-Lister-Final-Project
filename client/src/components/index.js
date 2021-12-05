@@ -1,4 +1,5 @@
 import AppBanner from './AppBanner'
+import CommentCard from './CommentCard'
 import DeleteModal from './DeleteModal'
 import EditToolbar from './EditToolbar'
 import HomeScreen from './HomeScreen'
@@ -19,6 +20,7 @@ import WorkspaceScreen from './WorkspaceScreen'
 */
 export { 
     AppBanner, 
+    CommentCard,
     DeleteModal, 
     EditToolbar,  
     HomeScreen,

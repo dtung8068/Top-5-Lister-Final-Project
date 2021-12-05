@@ -6,13 +6,17 @@ import ListItem from '@mui/material/ListItem';
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Button from '@mui/material/Button';
-import ThumbUpIcon from '@mui/icons-material/ThumbUp';
-import ThumbDownIcon from '@mui/icons-material/ThumbDown';
+import ThumbUpAltIcon from '@mui/icons-material/ThumbUpAlt';
+import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt';
+import ThumbDownAltIcon from '@mui/icons-material/ThumbDownAlt';
+import ThumbDownOffAltIcon from '@mui/icons-material/ThumbDownOffAlt';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import ListItemText from '@mui/material/ListItemText';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import Grid from '@mui/material/Grid';
+import Typography from '@mui/material/Typography';
+import AuthContext from '../auth';
 /*
     This is a card in our list of top 5 lists. It lets select
     a list for editing and it has controls for changing its 
@@ -22,6 +26,7 @@ import Grid from '@mui/material/Grid';
 */
 function ListCard(props) {
     const { store } = useContext(GlobalStoreContext);
+    const { auth } = useContext(AuthContext);
     const [expandActive, setExpandActive] = useState(false);
     const { idNamePair } = props;
 
@@ -45,10 +50,103 @@ function ListCard(props) {
     function toggleExpansion() {
         let newActive = !expandActive;
         setExpandActive(newActive);
+        let temp = idNamePair.views;
+        temp = temp + 1;
+        if(!expandActive && idNamePair.published !== "1970-01-01T00:00:00.000Z") {
+            store.changeListNoPublish(idNamePair._id, idNamePair.likes, idNamePair.dislikes, temp, idNamePair.comments);
+        }
     }
     function parsePublishDate(date) {
         let arr = date.split('T');
         return arr[0];
+    }
+    function handleLike() {
+        let temp = idNamePair.likes;
+        if(!temp.includes(auth.user.username)) {
+            temp.push(auth.user.username)
+        }
+        else {
+            let index = temp.indexOf(auth.user.username);
+                if (index !== -1) {
+                    temp.splice(index, 1);
+                }
+        }
+        let temp2 = idNamePair.dislikes;
+        if(temp2.includes(auth.user.username)) {
+            let index = temp2.indexOf(auth.user.username);
+            if (index !== -1) {
+                temp2.splice(index, 1);
+            }
+        }
+        store.changeListNoPublish(idNamePair._id, temp, temp2, idNamePair.views, idNamePair.comments);
+    }
+    function handleDislike() {
+        let temp = idNamePair.dislikes;
+        if(!temp.includes(auth.user.username)) {
+            temp.push(auth.user.username)
+        }
+        else {
+            let index = temp.indexOf(auth.user.username);
+                if (index !== -1) {
+                    temp.splice(index, 1);
+                }
+        }
+        let temp2 = idNamePair.likes;
+        if(temp2.includes(auth.user.username)) {
+            let index = temp2.indexOf(auth.user.username);
+            if (index !== -1) {
+                temp2.splice(index, 1);
+            }
+        }
+        store.changeListNoPublish(idNamePair._id, temp2, temp, idNamePair.views, idNamePair.comments);
+    }
+    let likeButton = <ListItemIcon>
+    <ThumbUpOffAltIcon onClick={handleLike} className="menuIcon" style={{
+        marginRight: "50px",
+        display: 'flex',
+        fontSize:'32pt'}}>
+    </ThumbUpOffAltIcon>
+    </ListItemIcon>
+    let dislikeButton = <ListItemIcon>
+    <ThumbDownOffAltIcon onClick = {handleDislike} className="menuIcon" style={{
+        marginRight: "50px",
+        display: 'flex',
+        fontSize:'32pt'}}>
+    </ThumbDownOffAltIcon>
+    </ListItemIcon>
+    if(auth.guest) {
+        likeButton = <ListItemIcon>
+        <ThumbUpOffAltIcon className="menuIconDisabled" style={{
+            marginRight: "50px",
+            display: 'flex',
+            fontSize:'32pt'}}>
+        </ThumbUpOffAltIcon>
+        </ListItemIcon>
+        dislikeButton = <ListItemIcon>
+        <ThumbDownOffAltIcon className="menuIconDisabled" style={{
+            marginRight: "50px",
+            display: 'flex',
+            fontSize:'32pt'}}>
+        </ThumbDownOffAltIcon>
+        </ListItemIcon>
+    }
+    if(idNamePair.likes.includes(auth.user.username)) {
+        likeButton = <ListItemIcon>
+        <ThumbUpAltIcon onClick={handleLike} className="menuIcon" style={{
+            marginRight: "50px",
+            display: 'flex',
+            fontSize:'32pt'}}>
+        </ThumbUpAltIcon>
+        </ListItemIcon>
+    }
+    if(idNamePair.dislikes.includes(auth.user.username)) {
+        dislikeButton = <ListItemIcon>
+        <ThumbDownAltIcon onClick={handleDislike} className="menuIcon" style={{
+            marginRight: "50px",
+            display: 'flex',
+            fontSize:'32pt'}}>
+        </ThumbDownAltIcon>
+        </ListItemIcon>
     }
     let cardElement = <List sx={{
         border: "1.5px solid rgb(0, 0, 0)",
@@ -99,7 +197,7 @@ function ListCard(props) {
         mx: 72,
         my: 2,
         whiteSpace: "nowrap",
-    }} primary={"Views: 0"}>
+    }} primary={"Views: " + idNamePair.views}>
 
     </ListItemText>
     <ListItemIcon>
@@ -136,20 +234,18 @@ function ListCard(props) {
                 }}
                 primary = {idNamePair.name}
                 secondary= {"By: " +  idNamePair.ownerUsername} />
-                <ListItemIcon>
-                <ThumbUpIcon className="menuIcon" style={{
-                    marginRight: "50px",
-                    display: 'flex',
-                    fontSize:'32pt'}}>
-                </ThumbUpIcon>
-                </ListItemIcon>
-                <ListItemIcon>
-                <ThumbDownIcon className="menuIcon" style={{
-                    marginRight: "50px",
-                    display: 'flex',
-                    fontSize:'32pt'}}>
-                </ThumbDownIcon>
-                </ListItemIcon>
+                {likeButton}
+                <Typography sx={{
+                    fontSize: '32pt',
+                }}>
+                {idNamePair.likes.length}
+                </Typography>
+                {dislikeButton}
+                <Typography sx={{
+                    fontSize: '32pt',
+                }}>
+                {idNamePair.dislikes.length}
+                </Typography>
                 <ListItemIcon>
                 <IconButton onClick={(event) => {
                         handleDeleteList(event, idNamePair._id)
@@ -178,7 +274,7 @@ function ListCard(props) {
             mx: 80,
             my: 2,
             whiteSpace: "nowrap",
-        }} primary={"Views: 0"}>
+        }} primary={"Views: " + idNamePair.views}>
     
         </ListItemText>
         <ListItemIcon>
@@ -216,20 +312,18 @@ function ListCard(props) {
                 }}
                 primary = {idNamePair.name}
                 secondary= {"By: " +  idNamePair.ownerUsername} />
-                <ListItemIcon>
-                <ThumbUpIcon className="menuIcon" style={{
-                    marginRight: "50px",
-                    display: 'flex',
-                    fontSize:'32pt'}}>
-                </ThumbUpIcon>
-                </ListItemIcon>
-                <ListItemIcon>
-                <ThumbDownIcon className="menuIcon" style={{
-                    marginRight: "50px",
-                    display: 'flex',
-                    fontSize:'32pt'}}>
-                </ThumbDownIcon>
-                </ListItemIcon>
+                {likeButton}
+                <Typography sx={{
+                    fontSize: '32pt',
+                }}>
+                {idNamePair.likes.length}
+                </Typography>
+                {dislikeButton}
+                <Typography sx={{
+                    fontSize: '32pt',
+                }}>
+                {idNamePair.dislikes.length}
+                </Typography>
         </ListItem>
         <ListItem id={idNamePair._id}
             key={idNamePair._id}
@@ -249,7 +343,7 @@ function ListCard(props) {
             mx: 80,
             my: 2,
             whiteSpace: "nowrap",
-        }} primary={"Views: 0"}>
+        }} primary={"Views: " + idNamePair.views}>
     
         </ListItemText>
         <ListItemIcon>
@@ -352,7 +446,7 @@ function ListCard(props) {
             mx: 72,
             my: 2,
             whiteSpace: "nowrap",
-        }} primary={"Views: 0"}>
+        }} primary={"Views: " + idNamePair.views}>
     
         </ListItemText>
         <ListItemIcon>
@@ -389,20 +483,18 @@ function ListCard(props) {
                 }}
                 primary = {idNamePair.name}
                 secondary= {"By: " +  idNamePair.ownerUsername} />
-                <ListItemIcon>
-                <ThumbUpIcon className="menuIcon" style={{
-                    marginRight: "50px",
-                    display: 'flex',
-                    fontSize:'32pt'}}>
-                </ThumbUpIcon>
-                </ListItemIcon>
-                <ListItemIcon>
-                <ThumbDownIcon className="menuIcon" style={{
-                    marginRight: "50px",
-                    display: 'flex',
-                    fontSize:'32pt'}}>
-                </ThumbDownIcon>
-                </ListItemIcon>
+                {likeButton}
+                <Typography sx={{
+                    fontSize: '32pt',
+                }}>
+                {idNamePair.likes.length}
+                </Typography>
+                {dislikeButton}
+                <Typography sx={{
+                    fontSize: '32pt',
+                }}>
+                {idNamePair.dislikes.length}
+                </Typography>
                 <ListItemIcon>
                 <IconButton onClick={(event) => {
                         handleDeleteList(event, idNamePair._id)
@@ -476,7 +568,7 @@ function ListCard(props) {
             mx: 80,
             my: 2,
             whiteSpace: "nowrap",
-        }} primary={"Views: 0"}>
+        }} primary={"Views: " + idNamePair.views}>
     
         </ListItemText>
         <ListItemIcon>
@@ -513,20 +605,18 @@ function ListCard(props) {
                 }}
                 primary = {idNamePair.name}
                 secondary= {"By: " +  idNamePair.ownerUsername} />
-                <ListItemIcon>
-                <ThumbUpIcon className="menuIcon" style={{
-                    marginRight: "50px",
-                    display: 'flex',
-                    fontSize:'32pt'}}>
-                </ThumbUpIcon>
-                </ListItemIcon>
-                <ListItemIcon>
-                <ThumbDownIcon className="menuIcon" style={{
-                    marginRight: "50px",
-                    display: 'flex',
-                    fontSize:'32pt'}}>
-                </ThumbDownIcon>
-                </ListItemIcon>
+                {likeButton}
+                <Typography sx={{
+                    fontSize: '32pt',
+                }}>
+                {idNamePair.likes.length}
+                </Typography>
+                {dislikeButton}
+                <Typography sx={{
+                    fontSize: '32pt',
+                }}>
+                {idNamePair.dislikes.length}
+                </Typography>
         </ListItem>
 <Grid container spacing={2}>
     <List sx={{
@@ -591,7 +681,7 @@ function ListCard(props) {
             mx: 80,
             my: 2,
             whiteSpace: "nowrap",
-        }} primary={"Views: 0"}>
+        }} primary={"Views: " + idNamePair.views}>
     
         </ListItemText>
         <ListItemIcon>

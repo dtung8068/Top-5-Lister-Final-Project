@@ -270,6 +270,52 @@ function GlobalStoreContextProvider(props) {
             history.push("/");
         }
     }
+    store.changeListNoPublish = async function(id, newLikes, newDislikes, newViews, newComments) {
+        let response = await api.getTop5ListById(id);
+        if (response.data.success) {
+            let top5List = response.data.top5List;
+            top5List.likes = newLikes;
+            top5List.dislikes = newDislikes;
+            top5List.views = newViews;
+            top5List.comments = newComments;
+            async function updateList(top5List) {
+                response = await api.updateTop5ListById(top5List._id, top5List);
+                if (response.data.success) {
+                    async function getListPairs(top5List) {
+                        response = await api.getTop5ListPairs();
+                        if (response.data.success) {
+                            let pairsArray = response.data.idNamePairs;
+                            if(store.currentIcon === "Home") {
+                                for(let i = 0; i < pairsArray.length; i++) {
+                                    if(pairsArray[i].ownerUsername !== auth.user.username) {
+                                        pairsArray.splice(i, 1);
+                                        i--;
+                                    }
+                                }
+                            }
+                            else {
+                                for(let i = 0; i < pairsArray.length; i++) {
+                                    if(pairsArray[i].published === "1970-01-01T00:00:00.000Z") {
+                                        pairsArray.splice(i, 1);
+                                        i--;
+                                    }
+                                }
+                            }
+                            storeReducer({
+                                type: GlobalStoreActionType.CHANGE_LIST_NAME,
+                                payload: {
+                                    idNamePairs: pairsArray,
+                                }
+                            });
+                        }
+                    }
+                    getListPairs(top5List);
+                }
+            }
+            updateList(top5List);
+            history.push("/");
+        }
+    }
     // THIS FUNCTION PROCESSES CLOSING THE CURRENTLY LOADED LIST
     store.closeCurrentList = function () {
         storeReducer({
@@ -289,6 +335,10 @@ function GlobalStoreContextProvider(props) {
             items: ["?", "?", "?", "?", "?"],
             ownerUsername: auth.user.username,
             published: new Date(0),
+            likes: [],
+            dislikes: [],
+            views: 0,
+            comments: [],
         };
         const response = await api.createTop5List(payload);
         if (response.data.success) {
@@ -330,15 +380,6 @@ function GlobalStoreContextProvider(props) {
                     }
                 }
             }
-            //Splice by Search
-            //if(store.searchText !== "") {
-            //    for(let i = 0; i < pairsArray.length; i++) {
-            //        if(!pairsArray[i].name.startsWith(store.searchText)) {
-            //            pairsArray.splice(i, 1);
-            //            i--;
-            //        }
-            //    }
-           // }
             storeReducer({
                 type: GlobalStoreActionType.LOAD_ID_NAME_PAIRS,
                 payload: pairsArray
@@ -354,7 +395,6 @@ function GlobalStoreContextProvider(props) {
             case "Publish Date (Newest)": {
                 let temp = store.idNamePairs;
                 temp = temp.sort((a, b) => new Date(b.published) - new Date(a.published));
-                console.log(temp);
                 storeReducer({
                     type: GlobalStoreActionType.LOAD_ID_NAME_PAIRS,
                     payload: temp
@@ -364,7 +404,33 @@ function GlobalStoreContextProvider(props) {
             case "Publish Date (Oldest)": {
                 let temp = store.idNamePairs;
                 temp = temp.sort((a, b) => new Date(a.published) - new Date(b.published));
-                console.log(temp);
+                storeReducer({
+                    type: GlobalStoreActionType.LOAD_ID_NAME_PAIRS,
+                    payload: temp
+                });
+                break;
+            }
+            case "Views": {
+                let temp = store.idNamePairs;
+                temp = temp.sort((a, b) => b.views - a.views);
+                storeReducer({
+                    type: GlobalStoreActionType.LOAD_ID_NAME_PAIRS,
+                    payload: temp
+                });
+                break;
+            }
+            case "Likes": {
+                let temp = store.idNamePairs;
+                temp = temp.sort((a, b) => b.likes.length - a.likes.length);
+                storeReducer({
+                    type: GlobalStoreActionType.LOAD_ID_NAME_PAIRS,
+                    payload: temp
+                });
+                break;
+            }
+            case "Dislikes": {
+                let temp = store.idNamePairs;
+                temp = temp.sort((a, b) => b.dislikes.length - a.dislikes.length);
                 storeReducer({
                     type: GlobalStoreActionType.LOAD_ID_NAME_PAIRS,
                     payload: temp
