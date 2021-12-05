@@ -1,4 +1,4 @@
-import { useContext } from 'react'
+import { useContext, useState } from 'react'
 import AuthContext from '../auth'
 import { GlobalStoreContext } from '../store'
 import HomeIcon from '@mui/icons-material/Home';
@@ -8,6 +8,8 @@ import FunctionsIcon from '@mui/icons-material/Functions';
 import TextField from '@mui/material/TextField';
 import SortIcon from '@mui/icons-material/Sort';
 import { Typography } from '@mui/material';
+import MenuItem from '@mui/material/MenuItem';
+import Menu from '@mui/material/Menu';
 /*
     This toolbar is a functional React component that
     manages the undo/redo/close buttons.
@@ -17,6 +19,8 @@ import { Typography } from '@mui/material';
 function MenuBar() {
     const { store } = useContext(GlobalStoreContext);
     const { auth } = useContext(AuthContext);
+    const [anchorEl, setAnchorEl] = useState(null);
+    const isMenuOpen = Boolean(anchorEl);
     let text = "";
     function handleHomeClick() {
         store.updateCurrentIcon("Home");
@@ -30,9 +34,13 @@ function MenuBar() {
     function handleFunctionClick() {
         store.updateCurrentIcon("Community");
     }
-    function handleSortMenuOpen() {
-        console.log("Home");
-    }
+    const handleSortMenuOpen = (event) => {
+        setAnchorEl(event.currentTarget);
+    };
+
+    const handleMenuClose = () => {
+        setAnchorEl(null);
+    };
     async function handleKeyPress(event) {
         if (event.code === "Enter") {
             store.handleSearch(text);
@@ -40,6 +48,10 @@ function MenuBar() {
     }
     function handleUpdateText(event) {
         text = event.target.value;
+    }
+    const handleSort = (event) => {
+        handleMenuClose();
+        store.sort(event.target.textContent);
     }
     if(!auth.loggedIn) {
         return null
@@ -80,7 +92,30 @@ function MenuBar() {
         display: "inline",
         float: "right",
         marginRight: "10px"
-    }}> Sort By </Typography>
+    }} > Sort By </Typography>
+    const menuId = 'primary-search-account-menu';
+    const menu = <Menu
+    anchorEl={anchorEl}
+    anchorOrigin={{
+        vertical: 'top',
+        horizontal: 'right',
+    }}
+    id={menuId}
+    keepMounted
+    transformOrigin={{
+        vertical: 'top',
+        horizontal: 'right',
+    }}
+    open={isMenuOpen}
+    onClose={handleMenuClose}
+>
+    <MenuItem onClick={handleSort}>Publish Date (Newest)</MenuItem>
+    <MenuItem onClick={handleSort}>Publish Date (Oldest)</MenuItem>
+    <MenuItem onClick={handleSort}>Views</MenuItem>
+    <MenuItem onClick={handleSort}>Likes</MenuItem>
+    <MenuItem onClick={handleSort}>Dislikes</MenuItem>
+</Menu>
+
     if(store.currentIcon === 'Home') {
         homeIcon = <HomeIcon className="menuIcon" style={{
             width: 50,
@@ -146,7 +181,9 @@ function MenuBar() {
             {searchField}
             {sortByIcon}
             {sortBy}
+            {menu}
         </div>
+        
     )
 }
 

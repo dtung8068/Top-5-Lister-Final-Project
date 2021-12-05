@@ -359,6 +359,36 @@ function GlobalStoreContextProvider(props) {
             console.log("API FAILED TO GET THE LIST PAIRS");
         }
     }
+    store.sort = function (text) {
+        switch(text) {
+            case "Publish Date (Newest)": {
+                let temp = store.idNamePairs;
+                temp = temp.sort((a, b) => new Date(b.published) - new Date(a.published));
+                console.log(temp);
+                storeReducer({
+                    type: GlobalStoreActionType.LOAD_ID_NAME_PAIRS,
+                    payload: temp
+                });
+                break;
+            }
+            case "Publish Date (Oldest)": {
+                let temp = store.idNamePairs;
+                temp = temp.sort((a, b) => new Date(a.published) - new Date(b.published));
+                console.log(temp);
+                storeReducer({
+                    type: GlobalStoreActionType.LOAD_ID_NAME_PAIRS,
+                    payload: temp
+                });
+                break;
+            }
+            default: {
+                storeReducer({
+                    type: GlobalStoreActionType.LOAD_ID_NAME_PAIRS,
+                    payload: store.idNamePairs,
+                });
+            }
+        }
+    }
     store.handleSearch = function (text) {
         storeReducer({
             type: GlobalStoreActionType.SET_SEARCH_TEXT,

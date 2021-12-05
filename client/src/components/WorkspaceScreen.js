@@ -36,7 +36,7 @@ function WorkspaceScreen() {
     function canPublish() {
         let temp = store.idNamePairs;
         for(let i = 0; i < temp.length; i++) {
-            if(temp[i].published === "1970-01-01T00:00:00.000+00:00") {
+            if(temp[i].published === "1970-01-01T00:00:00.000Z") {
                 temp.splice(i, 1);
                 i--;
             }
@@ -60,7 +60,7 @@ function WorkspaceScreen() {
     function canPublish2(name) {
         let temp = store.idNamePairs;
         for(let i = 0; i < temp.length; i++) {
-            if(temp[i].published === "1970-01-01T00:00:00.000+00:00") {
+            if(temp[i].published === "1970-01-01T00:00:00.000Z") {
                 temp.splice(i, 1);
                 i--;
             }
