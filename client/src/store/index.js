@@ -22,6 +22,7 @@ export const GlobalStoreActionType = {
     CLOSE_CURRENT_LIST: "CLOSE_CURRENT_LIST",
     CREATE_NEW_LIST: "CREATE_NEW_LIST",
     LOAD_ID_NAME_PAIRS: "LOAD_ID_NAME_PAIRS",
+    LOAD_SEARCH_NAME_PAIRS: "LOAD_SEARCH_NAME_PAIRS",
     MARK_LIST_FOR_DELETION: "MARK_LIST_FOR_DELETION",
     UNMARK_LIST_FOR_DELETION: "UNMARK_LIST_FOR_DELETION",
     SET_CURRENT_ICON: "SET_CURRENT_ICON",
@@ -110,6 +111,19 @@ function GlobalStoreContextProvider(props) {
                     listMarkedForDeletion: null,
                     listMarkedForDeletionName: null,
                     currentIcon: store.currentIcon,
+                    searchText: store.searchText,
+                });
+            }
+            case GlobalStoreActionType.LOAD_SEARCH_NAME_PAIRS: {
+                return setStore({
+                    idNamePairs: payload.idNamePairs,
+                    currentList: null,
+                    newListCounter: store.newListCounter,
+                    isListNameEditActive: false,
+                    isItemEditActive: false,
+                    listMarkedForDeletion: null,
+                    listMarkedForDeletionName: null,
+                    currentIcon: payload.currentIcon,
                     searchText: store.searchText,
                 });
             }
@@ -308,6 +322,14 @@ function GlobalStoreContextProvider(props) {
                     }
                 }
             }
+            else {
+                for(let i = 0; i < pairsArray.length; i++) {
+                    if(pairsArray[i].published === "1970-01-01T00:00:00.000Z") {
+                        pairsArray.splice(i, 1);
+                        i--;
+                    }
+                }
+            }
             //Splice by Search
             //if(store.searchText !== "") {
             //    for(let i = 0; i < pairsArray.length; i++) {
@@ -317,38 +339,6 @@ function GlobalStoreContextProvider(props) {
             //        }
             //    }
            // }
-            storeReducer({
-                type: GlobalStoreActionType.LOAD_ID_NAME_PAIRS,
-                payload: pairsArray
-            });
-            
-        }
-        else {
-            console.log("API FAILED TO GET THE LIST PAIRS");
-        }
-    }
-    store.loadSearchPairs = async function (text) {
-        const response = await api.getTop5ListPairs();
-        if (response.data.success) {
-            let pairsArray = response.data.idNamePairs;
-            //Splice by Username
-            if(store.currentIcon === "Home") {
-                for(let i = 0; i < pairsArray.length; i++) {
-                    if(pairsArray[i].ownerUsername !== auth.user.username) {
-                        pairsArray.splice(i, 1);
-                        i--;
-                    }
-                }
-            }
-            //Splice by Search
-            if(text !== "") {
-                for(let i = 0; i < pairsArray.length; i++) {
-                    if(!pairsArray[i].name.startsWith(text)) {
-                        pairsArray.splice(i, 1);
-                        i--;
-                    }
-                }
-            }
             storeReducer({
                 type: GlobalStoreActionType.LOAD_ID_NAME_PAIRS,
                 payload: pairsArray
@@ -394,13 +384,68 @@ function GlobalStoreContextProvider(props) {
             type: GlobalStoreActionType.SET_SEARCH_TEXT,
             payload: text
         });
-        store.loadSearchPairs(text);
+        store.loadSearchPairs(text, store.currentIcon);
     }
     store.updateCurrentIcon = function (currentIcon) {
         storeReducer({
             type: GlobalStoreActionType.SET_CURRENT_ICON,
             payload: currentIcon
         });
+        store.loadSearchPairs(store.searchText, currentIcon);
+    }
+    store.loadSearchPairs = async function (text, currentIcon) {
+        const response = await api.getTop5ListPairs();
+        if (response.data.success) {
+            let pairsArray = response.data.idNamePairs;
+            //Splice by Icon. 
+            if(currentIcon === "Home") {
+                for(let i = 0; i < pairsArray.length; i++) {
+                    if(pairsArray[i].ownerUsername !== auth.user.username) {
+                        pairsArray.splice(i, 1);
+                        i--;
+                    }
+                }
+            }
+            else {
+                for(let i = 0; i < pairsArray.length; i++) {
+                    if(pairsArray[i].published === "1970-01-01T00:00:00.000Z") {
+                        pairsArray.splice(i, 1);
+                        i--;
+                    }
+                }
+            }
+            //Splice by Search
+            if(text !== "") {
+                if(currentIcon === "Home" || currentIcon === "All Lists" || currentIcon === "Community") {
+                    for(let i = 0; i < pairsArray.length; i++) {
+                        if(!pairsArray[i].name.startsWith(text)) {
+                            pairsArray.splice(i, 1);
+                            i--;
+                        }
+                    }
+                }
+                else if(currentIcon === "Users") {
+                    for(let i = 0; i < pairsArray.length; i++) {
+                        if(!pairsArray[i].ownerUsername.startsWith(text)) {
+                            pairsArray.splice(i, 1);
+                            i--;
+                        }
+                    }
+                }
+
+            }
+            storeReducer({
+                type: GlobalStoreActionType.LOAD_SEARCH_NAME_PAIRS,
+                payload: {
+                    idNamePairs: pairsArray,
+                    currentIcon: currentIcon,
+                }
+            });
+            
+        }
+        else {
+            console.log("API FAILED TO GET THE LIST PAIRS");
+        }
     }
 
     // THE FOLLOWING 5 FUNCTIONS ARE FOR COORDINATING THE DELETION

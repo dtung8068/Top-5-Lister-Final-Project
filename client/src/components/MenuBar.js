@@ -123,6 +123,22 @@ function MenuBar() {
             border: "5px solid rgb(0, 128, 0)"
         }} onClick ={handleHomeClick}> </HomeIcon>
     }
+    if(store.currentIcon === 'All Lists') {
+        allListsIcon = <GroupsIcon className="menuIcon" style={{
+            width: 50,
+            height: 50,
+            border: "5px solid rgb(0, 128, 0)",
+            marginLeft: "10px",
+        }} onClick ={handleGroupsClick}> </GroupsIcon>
+    }
+    if(store.currentIcon === 'Users') {
+        userIcon = <PersonIcon className="menuIcon" style={{
+            width: 50,
+            height: 50,
+            border: "5px solid rgb(0, 128, 0)",
+            marginLeft: "10px",
+        }} onClick ={handlePersonClick}> </PersonIcon>
+    }
     if(store.currentIcon === "Community") {
         communityIcon = <FunctionsIcon className="menuIcon" style={{
             width: 50,

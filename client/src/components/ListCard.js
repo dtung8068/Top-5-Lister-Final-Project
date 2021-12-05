@@ -113,7 +113,7 @@ function ListCard(props) {
     </ListItem>
     </List>
 
-    if(idNamePair.published !== "1970-01-01T00:00:00.000Z") {
+    if(idNamePair.published !== "1970-01-01T00:00:00.000Z" && store.currentIcon === "Home") {
         cardElement = <List sx={{
             border: "1.5px solid rgb(0, 0, 0)",
             borderRadius: "5px",
@@ -158,6 +158,77 @@ function ListCard(props) {
                             fontSize:'32pt',
                             display: 'flex',}} />
                 </IconButton>
+                </ListItemIcon>
+        </ListItem>
+        <ListItem id={idNamePair._id}
+            key={idNamePair._id}
+            alignItems="flex-start"
+            sx={{display: 'flex'}}
+            style={{
+                fontSize: '48pt',
+                width: '100%',
+            }}
+            >
+            <ListItemText sx={{
+                whiteSpace: "nowrap",
+            }}> 
+                Published: {parsePublishDate(idNamePair.published)}
+            </ListItemText>
+        <ListItemText sx={{
+            mx: 80,
+            my: 2,
+            whiteSpace: "nowrap",
+        }} primary={"Views: 0"}>
+    
+        </ListItemText>
+        <ListItemIcon>
+        <ExpandMoreIcon sx={{
+            mx: -50,
+        }} className="menuIcon" style = {{
+            fontSize:'32pt'
+        }} onClick = {handleExpand}>
+        </ExpandMoreIcon>
+        </ListItemIcon>
+        </ListItem>
+        </List>
+    
+    }
+    if(idNamePair.published !== "1970-01-01T00:00:00.000Z" && store.currentIcon !== "Home") {
+        cardElement = <List sx={{
+            border: "1.5px solid rgb(0, 0, 0)",
+            borderRadius: "5px",
+            backgroundColor: "#d4d4f5",
+            p: 1,
+            mb: 1, 
+        }}>
+            <ListItem
+            id={idNamePair._id}
+            key={idNamePair._id}
+            alignItems="flex-start"
+            sx={{display: 'flex'}}
+            style={{
+                fontSize: '48pt',
+                width: '100%',
+            }}
+            >
+                <ListItemText sx ={{
+                    whiteSpace: "nowrap",
+                }}
+                primary = {idNamePair.name}
+                secondary= {"By: " +  idNamePair.ownerUsername} />
+                <ListItemIcon>
+                <ThumbUpIcon className="menuIcon" style={{
+                    marginRight: "50px",
+                    display: 'flex',
+                    fontSize:'32pt'}}>
+                </ThumbUpIcon>
+                </ListItemIcon>
+                <ListItemIcon>
+                <ThumbDownIcon className="menuIcon" style={{
+                    marginRight: "50px",
+                    display: 'flex',
+                    fontSize:'32pt'}}>
+                </ThumbDownIcon>
                 </ListItemIcon>
         </ListItem>
         <ListItem id={idNamePair._id}
@@ -295,7 +366,7 @@ function ListCard(props) {
         </ListItem>
         </List>
     }
-    if(expandActive && idNamePair.published !== "1970-01-01T00:00:00.000Z") {
+    if(expandActive && idNamePair.published !== "1970-01-01T00:00:00.000Z" && store.currentIcon === "Home") {
         cardElement = <List sx={{
             border: "1.5px solid rgb(0, 0, 0)",
             borderRadius: "5px",
@@ -340,6 +411,121 @@ function ListCard(props) {
                             fontSize:'32pt',
                             display: 'flex',}} />
                 </IconButton>
+                </ListItemIcon>
+        </ListItem>
+<Grid container spacing={2}>
+    <List sx={{
+        backgroundColor: "#2c2f70",
+        width: 500,
+        color: "#d4af37",
+        mx: 3,
+    }}>
+        <ListItem>
+            <ListItemText
+            primary={"1: " + idNamePair.items[0]}>
+            </ListItemText>
+        </ListItem>
+        <ListItem>
+            <ListItemText
+            primary={"2: " + idNamePair.items[1]}>
+            </ListItemText>
+        </ListItem>
+        <ListItem>
+            <ListItemText
+            primary={"3: " + idNamePair.items[2]}>
+            </ListItemText>
+        </ListItem>
+        <ListItem>
+            <ListItemText
+            primary={"4: " + idNamePair.items[3]}>
+            </ListItemText>
+        </ListItem>
+        <ListItem>
+            <ListItemText
+            primary={"5: " + idNamePair.items[4]}>
+            </ListItemText>
+        </ListItem>
+    </List>
+    <List sx={{
+        width: 400,
+    }}>
+        <ListItemIcon>
+        <TextField
+            style={{
+
+                width: "100%",
+            }} id="outlined-basic" label="Search" variant="outlined" />
+        </ListItemIcon>
+    </List>
+</Grid>
+        <ListItem id={idNamePair._id}
+            key={idNamePair._id}
+            alignItems="flex-start"
+            sx={{display: 'flex'}}
+            style={{
+                fontSize: '48pt',
+                width: '100%',
+            }}
+            >
+            <ListItemText sx={{
+                whiteSpace: "nowrap",
+            }}> 
+                Published: {parsePublishDate(idNamePair.published)}
+            </ListItemText>
+        <ListItemText sx={{
+            mx: 80,
+            my: 2,
+            whiteSpace: "nowrap",
+        }} primary={"Views: 0"}>
+    
+        </ListItemText>
+        <ListItemIcon>
+        <ExpandLessIcon sx={{
+            mx: -50,
+        }} className="menuIcon" style = {{
+            fontSize:'32pt'
+        }} onClick = {handleExpand}>
+        </ExpandLessIcon>
+        </ListItemIcon>
+        </ListItem>
+        </List>
+    }
+    if(expandActive && idNamePair.published !== "1970-01-01T00:00:00.000Z" && store.currentIcon !== "Home") {
+        cardElement = <List sx={{
+            border: "1.5px solid rgb(0, 0, 0)",
+            borderRadius: "5px",
+            backgroundColor: "#d4d4f5",
+            p: 1,
+            mb: 1,
+        }}>
+            <ListItem
+            id={idNamePair._id}
+            key={idNamePair._id}
+            alignItems="flex-start"
+            sx={{display: 'flex'}}
+            style={{
+                fontSize: '48pt',
+                width: '100%',
+            }}
+            >
+                <ListItemText sx ={{
+                    whiteSpace: "nowrap",
+                }}
+                primary = {idNamePair.name}
+                secondary= {"By: " +  idNamePair.ownerUsername} />
+                <ListItemIcon>
+                <ThumbUpIcon className="menuIcon" style={{
+                    marginRight: "50px",
+                    display: 'flex',
+                    fontSize:'32pt'}}>
+                </ThumbUpIcon>
+                </ListItemIcon>
+                <ListItemIcon>
+                <ThumbDownIcon className="menuIcon" style={{
+                    marginRight: "50px",
+                    display: 'flex',
+                    fontSize:'32pt'}}>
+                </ThumbDownIcon>
                 </ListItemIcon>
         </ListItem>
 <Grid container spacing={2}>
