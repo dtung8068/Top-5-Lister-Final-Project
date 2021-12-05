@@ -17,6 +17,7 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import AuthContext from '../auth';
+import CommentCard from './CommentCard.js';
 /*
     This is a card in our list of top 5 lists. It lets select
     a list for editing and it has controls for changing its 
@@ -29,6 +30,7 @@ function ListCard(props) {
     const { auth } = useContext(AuthContext);
     const [expandActive, setExpandActive] = useState(false);
     const { idNamePair } = props;
+    const [text, setText] = useState("");
 
     function handleLoadList(event, id) {
         if (!event.target.disabled) {
@@ -99,6 +101,18 @@ function ListCard(props) {
             }
         }
         store.changeListNoPublish(idNamePair._id, temp2, temp, idNamePair.views, idNamePair.comments);
+    }
+    async function handleKeyPress(event) {
+        if (event.code === "Enter" && text !== "") {
+            let temp = idNamePair.comments;
+            let comment = {name: auth.user.username, comment: text};
+            temp.push(comment);
+            store.changeListNoPublish(idNamePair._id, idNamePair.likes, idNamePair.dislikes, idNamePair.views, temp);
+            setText("");
+        }
+    }
+    function handleUpdateText(event) {
+        setText(event.target.value);
     }
     let likeButton = <ListItemIcon>
     <ThumbUpOffAltIcon onClick={handleLike} className="menuIcon" style={{
@@ -539,13 +553,21 @@ function ListCard(props) {
         </ListItem>
     </List>
     <List sx={{
+        height: 300,
         width: 400,
+        overflow: 'auto',
     }}>
+        {idNamePair.comments.map((item) => (
+                        <CommentCard
+                        username={item.name}
+                        comment={item.comment}/>
+                    ))}
         <ListItemIcon>
-        <TextField
+        <TextField onChange={handleUpdateText}
+    onKeyPress={handleKeyPress}
+    value = {text}
             style={{
-
-                width: "100%",
+                width: 370,
             }} id="outlined-basic" label="Search" variant="outlined" />
         </ListItemIcon>
     </List>
@@ -652,13 +674,21 @@ function ListCard(props) {
         </ListItem>
     </List>
     <List sx={{
+        height: 300,
         width: 400,
+        overflow: 'auto',
     }}>
+        {idNamePair.comments.map((item) => (
+                        <CommentCard
+                        username={item.name}
+                        comment={item.comment}/>
+                    ))}
         <ListItemIcon>
-        <TextField
+        <TextField onChange={handleUpdateText}
+    onKeyPress={handleKeyPress}
+    value = {text}
             style={{
-
-                width: "100%",
+                width: 370,
             }} id="outlined-basic" label="Search" variant="outlined" />
         </ListItemIcon>
     </List>
