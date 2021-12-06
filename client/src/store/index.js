@@ -249,6 +249,67 @@ function GlobalStoreContextProvider(props) {
                         response = await api.getTop5ListPairs();
                         if (response.data.success) {
                             let pairsArray = response.data.idNamePairs;
+                            if(top5List.published !== "1970-01-01T00:00:00.000Z") {
+                                let counter = 0;
+                                for(let i = 0; i < pairsArray.length; i++) {
+                                    if(pairsArray[i].name === top5List.name) {
+                                        counter++;
+                                    }
+                                }
+                                if(counter !== 1) {
+                                    let response = await api.getCommunityListPairs();
+                                    if(response.data.success) {
+                                        let communityListPairs = response.data.idNamePairs;
+                                        let list = "";
+                                        for(let i = 0; i < communityListPairs.length; i++) {
+                                            if(top5List.name === communityListPairs[i].name) {
+                                                list = communityListPairs[i];
+                                            }
+                                        }
+                                        let arr = list.items;
+                                        for(let i = 0; i < top5List.items.length; i++) {
+                                            let changed = false;
+                                            for(let j = 0; j < arr.length; j++) {
+                                                if(top5List.items[i] === arr[j].item) {
+                                                    arr[j].points += (5 - i);
+                                                    changed = true;
+                                                }
+                                            }
+                                            if(!changed) {
+                                                arr.push({item: top5List.items[i], points: (5 - i)});
+                                            }
+                                        }
+                                        arr = arr.sort((a, b) => b.points - a.points);
+                                        let payload = {
+                                            name: list.name,
+                                            items: arr,
+                                            published: top5List.published,
+                                            likes: list.likes,
+                                            dislikes: list.dislikes,
+                                            views: list.views,
+                                            comments: list.comments,
+                                        }
+                                        await api.updateCommunityListById(list._id, payload);
+                                    }
+                                }
+                                else {
+                                    let arr = [];
+                                    for(let i = 0; i < top5List.items.length; i++) {
+                                        arr.push({item: top5List.items[i], points: (5 - i)});
+                                    }
+                                    let payload = {
+                                        name: top5List.name,
+                                        items: arr,
+                                        published: top5List.published,
+                                        likes: [],
+                                        dislikes: [],
+                                        views: 0,
+                                        comments: [],
+                                    };
+                                    console.log(payload);
+                                    await api.createCommunityList(payload);
+                                }
+                            }
                             for(let i = 0; i < pairsArray.length; i++) {
                                 if(pairsArray[i].ownerUsername !== auth.user.username) {
                                     pairsArray.splice(i, 1);

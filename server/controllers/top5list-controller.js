@@ -1,3 +1,4 @@
+const CommunityList = require('../models/communitylist-model');
 const Top5List = require('../models/top5list-model');
 const auth = require('../auth');
 const User = require('../models/user-model');
@@ -39,6 +40,30 @@ createTop5List = (req, res) => {
             })
         })
 }
+createCommunityList = (req, res) => {
+    const body = req.body;
+    if (!body) {
+        return res.status(400).json({
+            success: false,
+            error: 'You must provide a Community List',
+        })
+    }
+    const communitylist = new CommunityList(body);
+    console.log("creating communityList: " + JSON.stringify(communitylist));
+    communitylist.save().then(() => {
+            return res.status(201).json({
+                success: true,
+                communitylist: communitylist,
+                message: 'Community List Created!'
+            })
+        })
+        .catch(error => {
+            return res.status(400).json({
+                error,
+                message: 'Community List Not Created!'
+            })
+        })
+}
 checkToken = async (req, res) => {
     auth.verify(req, res, async function () {
         const loggedInUser = await User.findOne({ _id: req.userId });
@@ -66,7 +91,6 @@ updateTop5List = async (req, res) => {
             error: 'You must provide a body to update',
         })
     }
-
     Top5List.findOne({ _id: req.params.id }, (err, top5List) => {
         console.log("top5List found: " + JSON.stringify(top5List));
         if (err) {
@@ -101,6 +125,37 @@ updateTop5List = async (req, res) => {
             })
     })
 }
+
+updateCommunityList = async(req, res) => {
+    const body = req.body;
+    CommunityList.findOne({ _id: req.params.id }, (err, communityList) => {
+        communityList.name = body.name;
+        communityList.items = body.items;
+        communityList.published = body.published;
+        communityList.likes = body.likes;
+        communityList.dislikes = body.dislikes;
+        communityList.views = body.views;
+        communityList.comments = body.comments;
+        communityList
+        .save()
+        .then(() => {
+            console.log("SUCCESS!!!");
+            return res.status(200).json({
+                success: true,
+                id: communityList._id,
+                message: 'Community List updated!',
+            })
+        })
+        .catch(error => {
+            console.log("FAILURE: " + JSON.stringify(error));
+            return res.status(404).json({
+                error,
+                message: 'Community List not updated!',
+            })
+        })
+    })
+}
+
 
 deleteTop5List = async (req, res) => {
     if(!checkToken(req, res)) {
@@ -195,13 +250,48 @@ getTop5ListPairs = async (req, res) => {
         }
     }).catch(err => console.log(err))
 }
+getCommunityListPairs = async (req, res) => {
+    await CommunityList.find({ }, (err, communityLists) => {
+        if (err) {
+            return res.status(400).json({ success: false, error: err })
+        }
+        if (!communityLists) {
+            console.log("!communityLists.length");
+            return res
+                .status(404)
+                .json({ success: false, error: 'CommunityLists not found' })
+        }
+        else {
+            // PUT ALL THE LISTS INTO ID, NAME PAIRS
+            let pairs = [];
+            for (let key in communityLists) {
+                let list = communityLists[key];
+                let pair = {
+                    _id: list._id,
+                    name: list.name,
+                    items: list.items,
+                    published: list.published,
+                    likes: list.likes,
+                    dislikes: list.dislikes,
+                    views: list.views,
+                    comments: list.comments,
+                };
+                pairs.push(pair);
+            }
+            return res.status(200).json({ success: true, idNamePairs: pairs })
+        }
+    }).catch(err => console.log(err))
+}
 
 module.exports = {
     createTop5List,
+    createCommunityList,
     updateTop5List,
+    updateCommunityList,
     deleteTop5List,
     getTop5Lists,
     getTop5ListPairs,
+    getCommunityListPairs,
     getTop5ListById,
     checkToken
 }

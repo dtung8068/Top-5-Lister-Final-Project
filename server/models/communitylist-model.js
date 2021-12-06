@@ -9,8 +9,8 @@ const CommentSchema = new Schema(
 )
 const ItemSchema = new Schema(
     {
-        items: { type: String, required: true},
-        points: { type: Number, required: true},
+        item: {type: String, required: true},
+        points: {type: Number, required: true},
     }
 )
 

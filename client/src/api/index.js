@@ -22,6 +22,13 @@ const api = axios.create({
 // WORK, AND SOME REQUIRE DATA, WHICH WE CALL THE payload, FOR WHEN
 // WE NEED TO PUT THINGS INTO THE DATABASE OR IF WE HAVE SOME
 // CUSTOM FILTERS FOR QUERIES
+
+export const createCommunityList = (payload) => api.post('/communitylist/', payload)
+export const updateCommunityListById = (id, payload) => api.put(`/communitylist/${id}`, payload)
+export const getCommunityListPairs = () => api.get('/communitylistpairs')
+//router.delete('/communitylist/:id', auth.verify, Top5ListController.deleteCommunityList)
+
+
 export const createTop5List = (payload) => api.post(`/top5list/`, payload)
 export const getAllTop5Lists = () => api.get(`/top5lists/`)
 export const getTop5ListPairs = () => api.get(`/top5listpairs/`)
@@ -36,6 +43,10 @@ export const loginGuest = () => api.post(`/loginGuest/`)
 export const logoutUser = (user) => api.get(`/logout/`, user)
 
 const apis = {
+    createCommunityList,
+    updateCommunityListById,
+    getCommunityListPairs,
+
     createTop5List,
     getAllTop5Lists,
     getTop5ListPairs,

@@ -54,7 +54,15 @@ function WorkspaceScreen() {
                 return false;
             }
         }
-        
+        let contains = [];
+        for(let i = 0; i < listItems.length; i++) {
+            if(contains.includes(listItems[i])) {
+                return false;
+            }
+            else {
+                contains.push(listItems[i]);
+            }
+        }
         return true;
     }
     function canPublish2(name) {
@@ -76,6 +84,15 @@ function WorkspaceScreen() {
         for(let i = 0; i < listItems.length; i++) {
             if(listItems[i] === "" || listItems[i][0] === " ") {
                 return false;
+            }
+        }
+        let contains = [];
+        for(let i = 0; i < listItems.length; i++) {
+            if(contains.includes(listItems[i])) {
+                return false;
+            }
+            else {
+                contains.push(listItems[i]);
             }
         }
         return true;
