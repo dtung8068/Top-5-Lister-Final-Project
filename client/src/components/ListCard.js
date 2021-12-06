@@ -317,7 +317,7 @@ value = {text}
         </List>
     
     }
-    if(idNamePair.published !== "1970-01-01T00:00:00.000Z" && store.currentIcon !== "Home") {
+    if(idNamePair.published !== "1970-01-01T00:00:00.000Z" && store.currentIcon !== "Home" && store.currentIcon !== "Community") {
         cardElement = <List sx={{
             border: "1.5px solid rgb(0, 0, 0)",
             borderRadius: "5px",
@@ -366,6 +366,74 @@ value = {text}
                 whiteSpace: "nowrap",
             }}> 
                 Published: {parsePublishDate(idNamePair.published)}
+            </ListItemText>
+        <ListItemText sx={{
+            mx: 80,
+            my: 2,
+            whiteSpace: "nowrap",
+        }} primary={"Views: " + idNamePair.views}>
+    
+        </ListItemText>
+        <ListItemIcon>
+        <ExpandMoreIcon sx={{
+            mx: -50,
+        }} className="menuIcon" style = {{
+            fontSize:'32pt'
+        }} onClick = {handleExpand}>
+        </ExpandMoreIcon>
+        </ListItemIcon>
+        </ListItem>
+        </List>
+    
+    }
+    if(idNamePair.published !== "1970-01-01T00:00:00.000Z" && store.currentIcon === "Community") {
+        cardElement = <List sx={{
+            border: "1.5px solid rgb(0, 0, 0)",
+            borderRadius: "5px",
+            backgroundColor: "#d4d4f5",
+            p: 1,
+            mb: 1, 
+        }}>
+            <ListItem
+            id={idNamePair._id}
+            key={idNamePair._id}
+            alignItems="flex-start"
+            sx={{display: 'flex'}}
+            style={{
+                fontSize: '48pt',
+                width: '100%',
+            }}
+            >
+                <ListItemText sx ={{
+                    whiteSpace: "nowrap",
+                }}
+                primary = {idNamePair.name}/>
+                {likeButton}
+                <Typography sx={{
+                    fontSize: '32pt',
+                }}>
+                {idNamePair.likes.length}
+                </Typography>
+                {dislikeButton}
+                <Typography sx={{
+                    fontSize: '32pt',
+                }}>
+                {idNamePair.dislikes.length}
+                </Typography>
+        </ListItem>
+        <ListItem id={idNamePair._id}
+            key={idNamePair._id}
+            alignItems="flex-start"
+            sx={{display: 'flex'}}
+            style={{
+                fontSize: '48pt',
+                width: '100%',
+            }}
+            >
+            <ListItemText sx={{
+                whiteSpace: "nowrap",
+            }}> 
+                Updated: {parsePublishDate(idNamePair.published)}
             </ListItemText>
         <ListItemText sx={{
             mx: 80,
@@ -611,7 +679,7 @@ value = {text}
         </ListItem>
         </List>
     }
-    if(expandActive && idNamePair.published !== "1970-01-01T00:00:00.000Z" && store.currentIcon !== "Home") {
+    if(expandActive && idNamePair.published !== "1970-01-01T00:00:00.000Z" && store.currentIcon !== "Home" && store.currentIcon !== "Community") {
         cardElement = <List sx={{
             border: "1.5px solid rgb(0, 0, 0)",
             borderRadius: "5px",
@@ -706,6 +774,129 @@ value = {text}
                 whiteSpace: "nowrap",
             }}> 
                 Published: {parsePublishDate(idNamePair.published)}
+            </ListItemText>
+        <ListItemText sx={{
+            mx: 80,
+            my: 2,
+            whiteSpace: "nowrap",
+        }} primary={"Views: " + idNamePair.views}>
+    
+        </ListItemText>
+        <ListItemIcon>
+        <ExpandLessIcon sx={{
+            mx: -50,
+        }} className="menuIcon" style = {{
+            fontSize:'32pt'
+        }} onClick = {handleExpand}>
+        </ExpandLessIcon>
+        </ListItemIcon>
+        </ListItem>
+        </List>
+    }
+    if(expandActive && idNamePair.published !== "1970-01-01T00:00:00.000Z" && store.currentIcon === "Community") {
+        cardElement = <List sx={{
+            border: "1.5px solid rgb(0, 0, 0)",
+            borderRadius: "5px",
+            backgroundColor: "#d4d4f5",
+            p: 1,
+            mb: 1,
+        }}>
+            <ListItem
+            id={idNamePair._id}
+            key={idNamePair._id}
+            alignItems="flex-start"
+            sx={{display: 'flex'}}
+            style={{
+                fontSize: '48pt',
+                width: '100%',
+            }}
+            >
+                <ListItemText sx ={{
+                    whiteSpace: "nowrap",
+                }}
+                primary = {idNamePair.name}/>
+                {likeButton}
+                <Typography sx={{
+                    fontSize: '32pt',
+                }}>
+                {idNamePair.likes.length}
+                </Typography>
+                {dislikeButton}
+                <Typography sx={{
+                    fontSize: '32pt',
+                }}>
+                {idNamePair.dislikes.length}
+                </Typography>
+        </ListItem>
+<Grid container spacing={2}>
+    <List sx={{
+        backgroundColor: "#2c2f70",
+        width: 500,
+        color: "#d4af37",
+        mx: 3,
+    }}>
+        <ListItem>
+            <ListItemText
+            primary={"1: " + idNamePair.items[0].item}
+            secondary={idNamePair.items[0].points + " Points"}
+            secondaryTypographyProps={{ color: "#d4af37" }}>
+            </ListItemText>
+        </ListItem>
+        <ListItem>
+            <ListItemText
+            primary={"2: " + idNamePair.items[1].item}
+            secondary={idNamePair.items[1].points + " Points"}
+            secondaryTypographyProps={{ color: "#d4af37" }}>
+            </ListItemText>
+        </ListItem>
+        <ListItem>
+            <ListItemText
+            primary={"3: " + idNamePair.items[2].item}
+            secondary={idNamePair.items[2].points + " Points"}
+            secondaryTypographyProps={{ color: "#d4af37" }}>
+            </ListItemText>
+        </ListItem>
+        <ListItem>
+            <ListItemText
+            primary={"4: " + idNamePair.items[3].item}
+            secondary={idNamePair.items[3].points + " Points"}
+            secondaryTypographyProps={{ color: "#d4af37" }}>
+            </ListItemText>
+        </ListItem>
+        <ListItem>
+            <ListItemText
+            primary={"5: " + idNamePair.items[4].item}
+            secondary={idNamePair.items[4].points + " Points"}
+            secondaryTypographyProps={{ color: "#d4af37" }}>
+            </ListItemText>
+        </ListItem>
+    </List>
+    <List sx={{
+        height: 300,
+        width: 400,
+        overflow: 'auto',
+    }}>
+        {idNamePair.comments.map((item) => (
+                        <CommentCard
+                        username={item.name}
+                        comment={item.comment}/>
+                    ))}
+        {textField}
+    </List>
+</Grid>
+        <ListItem id={idNamePair._id}
+            key={idNamePair._id}
+            alignItems="flex-start"
+            sx={{display: 'flex'}}
+            style={{
+                fontSize: '48pt',
+                width: '100%',
+            }}
+            >
+            <ListItemText sx={{
+                whiteSpace: "nowrap",
+            }}> 
+                Updated: {parsePublishDate(idNamePair.published)}
             </ListItemText>
         <ListItemText sx={{
             mx: 80,

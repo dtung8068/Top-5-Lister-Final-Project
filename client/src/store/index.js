@@ -338,43 +338,86 @@ function GlobalStoreContextProvider(props) {
         }
     }
     store.changeListNoPublish = async function(id, newLikes, newDislikes, newViews, newComments) {
-        let response = await api.getTop5ListById(id);
+        let response;
+        if(store.currentIcon === "Community") {
+            response = await api.getCommunityListPairs();
+        }
+        else {
+            response = await api.getTop5ListById(id);
+        }
         if (response.data.success) {
-            let top5List = response.data.top5List;
+            let top5List;
+            if(store.currentIcon === "Community") {
+                let communityListPairs = response.data.idNamePairs;
+                for(let i = 0; i < communityListPairs.length; i++) {
+                    if(communityListPairs[i]._id === id) {
+                        top5List = communityListPairs[i];
+                    }
+                }
+            }
+            else {
+                top5List = response.data.top5List;
+            }
             top5List.likes = newLikes;
             top5List.dislikes = newDislikes;
             top5List.views = newViews;
             top5List.comments = newComments;
             async function updateList(top5List) {
-                response = await api.updateTop5ListById(top5List._id, top5List);
+                if(store.currentIcon === "Community") {
+                    response = await api.updateCommunityListById(top5List._id, top5List);
+                }
+                else {
+                    response = await api.updateTop5ListById(top5List._id, top5List);
+                }
                 if (response.data.success) {
                     async function getListPairs(top5List) {
-                        response = await api.getTop5ListPairs();
-                        if (response.data.success) {
-                            let pairsArray = response.data.idNamePairs;
-                            if(store.currentIcon === "Home") {
-                                for(let i = 0; i < pairsArray.length; i++) {
-                                    if(pairsArray[i].ownerUsername !== auth.user.username) {
-                                        pairsArray.splice(i, 1);
-                                        i--;
-                                    }
-                                }
-                            }
-                            else {
+                        if(store.currentIcon === "Community") {
+                            response = await api.getCommunityListPairs();
+                            if (response.data.success) {
+                                let pairsArray = response.data.idNamePairs;
                                 for(let i = 0; i < pairsArray.length; i++) {
                                     if(pairsArray[i].published === "1970-01-01T00:00:00.000Z") {
                                         pairsArray.splice(i, 1);
                                         i--;
                                     }
                                 }
+                                storeReducer({
+                                    type: GlobalStoreActionType.CHANGE_LIST_NAME,
+                                    payload: {
+                                        idNamePairs: pairsArray,
+                                    }
+                                });
                             }
-                            storeReducer({
-                                type: GlobalStoreActionType.CHANGE_LIST_NAME,
-                                payload: {
-                                    idNamePairs: pairsArray,
-                                }
-                            });
                         }
+                        else {
+                            response = await api.getTop5ListPairs();
+                            if (response.data.success) {
+                                let pairsArray = response.data.idNamePairs;
+                                if(store.currentIcon === "Home") {
+                                    for(let i = 0; i < pairsArray.length; i++) {
+                                        if(pairsArray[i].ownerUsername !== auth.user.username) {
+                                            pairsArray.splice(i, 1);
+                                            i--;
+                                        }
+                                    }
+                                }
+                                else {
+                                    for(let i = 0; i < pairsArray.length; i++) {
+                                        if(pairsArray[i].published === "1970-01-01T00:00:00.000Z") {
+                                            pairsArray.splice(i, 1);
+                                            i--;
+                                        }
+                                    }
+                                }
+                                storeReducer({
+                                    type: GlobalStoreActionType.CHANGE_LIST_NAME,
+                                    payload: {
+                                        idNamePairs: pairsArray,
+                                    }
+                                });
+                            } 
+                        }
+
                     }
                     getListPairs(top5List);
                 }
@@ -427,7 +470,13 @@ function GlobalStoreContextProvider(props) {
 
     // THIS FUNCTION LOADS ALL THE ID, NAME PAIRS SO WE CAN LIST ALL THE LISTS
     store.loadIdNamePairs = async function () {
-        const response = await api.getTop5ListPairs();
+        let response;
+        if(store.currentIcon === "Community") {
+            response = await api.getCommunityListPairs();
+        }
+        else {
+            response = await api.getTop5ListPairs();
+        }
         if (response.data.success) {
             let pairsArray = response.data.idNamePairs;
             //Splice by Username
