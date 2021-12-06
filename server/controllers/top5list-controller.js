@@ -176,6 +176,19 @@ deleteTop5List = async (req, res) => {
         }).catch(err => console.log(err))
     })
 }
+deleteCommunityList = async (req, res) => {
+    CommunityList.findById({_id: req.params.id}, (err, communitylist) => {
+        if (err) {
+            return res.status(404).json({
+                err,
+                message: 'Top 5 List not found!',
+            })
+        }
+        CommunityList.findOneAndDelete({ _id: req.params.id }, () => {
+            return res.status(200).json({ success: true, data: communitylist })
+        }).catch(err => console.log(err))
+    })
+}
 
 getTop5ListById = async (req, res) => {
     if(!checkToken(req, res)) {
@@ -289,6 +302,7 @@ module.exports = {
     updateTop5List,
     updateCommunityList,
     deleteTop5List,
+    deleteCommunityList,
     getTop5Lists,
     getTop5ListPairs,
     getCommunityListPairs,

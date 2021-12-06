@@ -6,7 +6,7 @@ const router = express.Router()
 
 router.post('/communitylist', Top5ListController.createCommunityList)
 router.put('/communitylist/:id', Top5ListController.updateCommunityList)
-//router.delete('/communitylist/:id', auth.verify, Top5ListController.deleteCommunityList)
+router.delete('/communitylist/:id', Top5ListController.deleteCommunityList)
 router.get('/communitylistpairs', Top5ListController.getCommunityListPairs)
 
 router.post('/top5list', auth.verify, Top5ListController.createTop5List)

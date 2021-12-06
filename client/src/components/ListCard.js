@@ -186,7 +186,7 @@ function ListCard(props) {
             secondary= {"By: " +  idNamePair.ownerUsername} />
             <ListItemIcon>
             <IconButton onClick={(event) => {
-                    handleDeleteList(event, idNamePair._id)
+                    handleDeleteList(event, idNamePair)
                 }} aria-label='delete'>
                     <DeleteIcon style={{
                         fontSize:'32pt',
@@ -262,7 +262,7 @@ function ListCard(props) {
                 </Typography>
                 <ListItemIcon>
                 <IconButton onClick={(event) => {
-                        handleDeleteList(event, idNamePair._id)
+                        handleDeleteList(event, idNamePair)
                     }} aria-label='delete'>
                         <DeleteIcon style={{
                             fontSize:'32pt',
@@ -397,7 +397,7 @@ function ListCard(props) {
                 secondary= {"By: " +  idNamePair.ownerUsername} />
                 <ListItemIcon>
                 <IconButton onClick={(event) => {
-                        handleDeleteList(event, idNamePair._id)
+                        handleDeleteList(event, idNamePair)
                     }} aria-label='delete'>
                         <DeleteIcon style={{
                             fontSize:'32pt',
@@ -511,7 +511,7 @@ function ListCard(props) {
                 </Typography>
                 <ListItemIcon>
                 <IconButton onClick={(event) => {
-                        handleDeleteList(event, idNamePair._id)
+                        handleDeleteList(event, idNamePair)
                     }} aria-label='delete'>
                         <DeleteIcon style={{
                             fontSize:'32pt',

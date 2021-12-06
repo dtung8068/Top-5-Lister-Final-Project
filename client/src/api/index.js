@@ -26,7 +26,7 @@ const api = axios.create({
 export const createCommunityList = (payload) => api.post('/communitylist/', payload)
 export const updateCommunityListById = (id, payload) => api.put(`/communitylist/${id}`, payload)
 export const getCommunityListPairs = () => api.get('/communitylistpairs')
-//router.delete('/communitylist/:id', auth.verify, Top5ListController.deleteCommunityList)
+export const deleteCommunityListById = (id) => api.delete(`/communitylist/${id}`)
 
 
 export const createTop5List = (payload) => api.post(`/top5list/`, payload)
@@ -46,6 +46,7 @@ const apis = {
     createCommunityList,
     updateCommunityListById,
     getCommunityListPairs,
+    deleteCommunityListById,
 
     createTop5List,
     getAllTop5Lists,

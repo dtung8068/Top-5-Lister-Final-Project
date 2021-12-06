@@ -581,13 +581,13 @@ function GlobalStoreContextProvider(props) {
     // showDeleteListModal, and hideDeleteListModal
     store.markListForDeletion = async function (id) {
         // GET THE LIST
-        let response = await api.getTop5ListById(id);
+        let response = await api.getTop5ListById(id._id);
         if (response.data.success) {
             let top5List = response.data.top5List;
             storeReducer({
                 type: GlobalStoreActionType.MARK_LIST_FOR_DELETION,
                 payload: {
-                    id: top5List._id,
+                    id: top5List,
                     name: top5List.name
                 }
             }
@@ -596,8 +596,49 @@ function GlobalStoreContextProvider(props) {
     }
 
     store.deleteList = async function (listToDelete) {
-        let response = await api.deleteTop5ListById(listToDelete);
+        let response = await api.deleteTop5ListById(listToDelete._id);
         if (response.data.success) {
+            response = await api.getCommunityListPairs();
+            if(response.data.success) {
+                let communityListPairs = response.data.idNamePairs;
+                let list = "";
+                for(let i = 0; i < communityListPairs.length; i++) {
+                    if(listToDelete.name === communityListPairs[i].name) {
+                        list = communityListPairs[i];
+                    }
+                }
+                let arr = list.items;
+                for(let i = 0; i < listToDelete.items.length; i++) {
+                    for(let j = 0; j < arr.length; j++) {
+                        if(listToDelete.items[i] === arr[j].item) {
+                            arr[j].points -= (5 - i);
+                        }
+                    }
+                }
+                for(let i = 0; i < arr.length; i++) {
+                    if(arr[i].points === 0) {
+                        arr.splice(i, 1);
+                        i--;
+                    }
+                }
+                console.log(arr);
+                if(arr.length === 0) {
+                    await api.deleteCommunityListById(list._id);
+                }
+                else {
+                    arr = arr.sort((a, b) => b.points - a.points);
+                    let payload = {
+                        name: list.name,
+                        items: arr,
+                        published: new Date(),
+                        likes: list.likes,
+                        dislikes: list.dislikes,
+                        views: list.views,
+                        comments: list.comments,
+                    }
+                    await api.updateCommunityListById(list._id, payload);
+                }
+            }
             store.loadIdNamePairs();
             history.push("/");
         }
