@@ -444,7 +444,6 @@ function GlobalStoreContextProvider(props) {
                                         }
                                     }
                                 }
-                                if(store.searchText !== "") {
                                     if(store.currentIcon === "Home" || store.currentIcon === "All Lists" || store.currentIcon === "Community") {
                                         for(let i = 0; i < pairsArray.length; i++) {
                                             let temp = pairsArray[i].name.toLowerCase();
@@ -455,6 +454,12 @@ function GlobalStoreContextProvider(props) {
                                         }
                                     }
                                     else if(store.currentIcon === "Users") {
+                                        if(store.searchText === "") {
+                                            for(let i = 0; i < pairsArray.length; i++) {
+                                                pairsArray.splice(i, 1);
+                                                i--;
+                                            }
+                                        }
                                         for(let i = 0; i < pairsArray.length; i++) {
                                             let temp = pairsArray[i].ownerUsername.toLowerCase();
                                             if(!temp.startsWith(store.searchText.toLowerCase())) {
@@ -463,8 +468,6 @@ function GlobalStoreContextProvider(props) {
                                             }
                                         }
                                     }
-                    
-                                }
                                 pairsArray = store.sort(pairsArray, store.sortMethod);
                                 storeReducer({
                                     type: GlobalStoreActionType.CHANGE_LIST_NAME,
@@ -604,7 +607,7 @@ function GlobalStoreContextProvider(props) {
             type: GlobalStoreActionType.SET_CURRENT_ICON,
             payload: currentIcon
         });
-        store.loadSearchPairs(store.searchText, currentIcon, store.sortMethod);
+        store.loadSearchPairs("", currentIcon, "Publish Date (Newest)");
     }
     store.loadSearchPairs = async function (text, currentIcon, sortMethod) {
         if(currentIcon === "Community") {
@@ -652,7 +655,6 @@ function GlobalStoreContextProvider(props) {
                 }
             }
             //Splice by Search
-            if(text !== "") {
                 if(currentIcon === "Home" || currentIcon === "All Lists" || currentIcon === "Community") {
                     for(let i = 0; i < pairsArray.length; i++) {
                         let temp = pairsArray[i].name.toLowerCase();
@@ -663,15 +665,22 @@ function GlobalStoreContextProvider(props) {
                     }
                 }
                 else if(currentIcon === "Users") {
-                    for(let i = 0; i < pairsArray.length; i++) {
-                        let temp = pairsArray[i].ownerUsername.toLowerCase();
-                        if(!temp.startsWith(text.toLowerCase())) {
+                    if(text === "") {
+                        for(let i = 0; i < pairsArray.length; i++) {
                             pairsArray.splice(i, 1);
                             i--;
                         }
                     }
+                    else {
+                        for(let i = 0; i < pairsArray.length; i++) {
+                            let temp = pairsArray[i].ownerUsername.toLowerCase();
+                            if(!temp.startsWith(text.toLowerCase())) {
+                                pairsArray.splice(i, 1);
+                                i--;
+                            }
+                        }
+                    }
                 }
-            }
             pairsArray = store.sort(pairsArray, sortMethod);
             storeReducer({
                 type: GlobalStoreActionType.LOAD_SEARCH_NAME_PAIRS,
