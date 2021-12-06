@@ -219,6 +219,7 @@ value = {text}
         >
         <ListItemIcon> 
         <Button sx={{
+            color: "red",
         }}onClick = {(event) => {handleLoadList(event, idNamePair._id)}}> Edit </Button>
         </ListItemIcon>
     <ListItemText sx={{
@@ -536,6 +537,7 @@ value = {text}
             >
             <ListItemIcon> 
             <Button sx={{
+                color: "red",
             }}onClick = {(event) => {handleLoadList(event, idNamePair._id)}}> Edit </Button>
             </ListItemIcon>
         <ListItemText sx={{

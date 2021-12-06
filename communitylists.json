@@ -1,0 +1,687 @@
+[{
+  "_id": {
+    "$oid": "61ae2ea9e3250e5ba484326b"
+  },
+  "likes": [
+    "dtung"
+  ],
+  "dislikes": [],
+  "name": "Animals To Eat",
+  "items": [
+    {
+      "_id": {
+        "$oid": "61ae2ea9e3250e5ba484326c"
+      },
+      "item": "Chicken",
+      "points": 7
+    },
+    {
+      "_id": {
+        "$oid": "61ae2ea9e3250e5ba484326e"
+      },
+      "item": "Cow",
+      "points": 7
+    },
+    {
+      "_id": {
+        "$oid": "61ae2ea9e3250e5ba484326f"
+      },
+      "item": "Pig",
+      "points": 5
+    },
+    {
+      "_id": {
+        "$oid": "61ae3568e3250e5ba48433b3"
+      },
+      "item": "Lobster",
+      "points": 5
+    },
+    {
+      "_id": {
+        "$oid": "61ae2ea9e3250e5ba484326d"
+      },
+      "item": "Lamb",
+      "points": 4
+    },
+    {
+      "_id": {
+        "$oid": "61ae2ea9e3250e5ba4843270"
+      },
+      "item": "Fish",
+      "points": 1
+    },
+    {
+      "_id": {
+        "$oid": "61ae3568e3250e5ba48433b6"
+      },
+      "item": "Salmon",
+      "points": 1
+    }
+  ],
+  "published": {
+    "$date": "2021-12-06T16:08:08.597Z"
+  },
+  "views": 8,
+  "comments": [],
+  "createdAt": {
+    "$date": "2021-12-06T15:39:21.069Z"
+  },
+  "updatedAt": {
+    "$date": "2021-12-06T19:05:42.330Z"
+  },
+  "__v": 14
+},{
+  "_id": {
+    "$oid": "61ae2edbe3250e5ba4843281"
+  },
+  "likes": [
+    "dtung"
+  ],
+  "dislikes": [],
+  "name": "Books",
+  "items": [
+    {
+      "_id": {
+        "$oid": "61ae2edbe3250e5ba4843282"
+      },
+      "item": "Beat The Dealer",
+      "points": 5
+    },
+    {
+      "_id": {
+        "$oid": "61ae2edbe3250e5ba4843283"
+      },
+      "item": "The World Of Yesterday",
+      "points": 4
+    },
+    {
+      "_id": {
+        "$oid": "61ae2edbe3250e5ba4843284"
+      },
+      "item": "How To Win Friends And Influence People",
+      "points": 3
+    },
+    {
+      "_id": {
+        "$oid": "61ae2edbe3250e5ba4843285"
+      },
+      "item": "A Brief History Of Time",
+      "points": 2
+    },
+    {
+      "_id": {
+        "$oid": "61ae2edbe3250e5ba4843286"
+      },
+      "item": "The Great Gatsby",
+      "points": 1
+    }
+  ],
+  "published": {
+    "$date": "2021-12-06T15:40:11.197Z"
+  },
+  "views": 1,
+  "comments": [],
+  "createdAt": {
+    "$date": "2021-12-06T15:40:11.320Z"
+  },
+  "updatedAt": {
+    "$date": "2021-12-06T16:50:25.515Z"
+  },
+  "__v": 2
+},{
+  "_id": {
+    "$oid": "61ae2f14e3250e5ba4843297"
+  },
+  "likes": [
+    "dtung"
+  ],
+  "dislikes": [],
+  "name": "Countries You'd Like To Visit",
+  "items": [
+    {
+      "_id": {
+        "$oid": "61ae2f14e3250e5ba4843298"
+      },
+      "item": "Japan",
+      "points": 5
+    },
+    {
+      "_id": {
+        "$oid": "61ae2f14e3250e5ba4843299"
+      },
+      "item": "Germany",
+      "points": 4
+    },
+    {
+      "_id": {
+        "$oid": "61ae2f14e3250e5ba484329a"
+      },
+      "item": "South Korea",
+      "points": 3
+    },
+    {
+      "_id": {
+        "$oid": "61ae2f14e3250e5ba484329b"
+      },
+      "item": "Vietnam",
+      "points": 2
+    },
+    {
+      "_id": {
+        "$oid": "61ae2f14e3250e5ba484329c"
+      },
+      "item": "Thailand",
+      "points": 1
+    }
+  ],
+  "published": {
+    "$date": "2021-12-06T15:41:08.452Z"
+  },
+  "views": 0,
+  "comments": [],
+  "createdAt": {
+    "$date": "2021-12-06T15:41:08.547Z"
+  },
+  "updatedAt": {
+    "$date": "2021-12-06T16:50:29.253Z"
+  },
+  "__v": 2
+},{
+  "_id": {
+    "$oid": "61ae2f32e3250e5ba48432ad"
+  },
+  "likes": [
+    "dtung"
+  ],
+  "dislikes": [],
+  "name": "Foods",
+  "items": [
+    {
+      "_id": {
+        "$oid": "61ae2f32e3250e5ba48432ae"
+      },
+      "item": "Fried Rice",
+      "points": 5
+    },
+    {
+      "_id": {
+        "$oid": "61ae2f32e3250e5ba48432af"
+      },
+      "item": "Sushi",
+      "points": 4
+    },
+    {
+      "_id": {
+        "$oid": "61ae2f32e3250e5ba48432b0"
+      },
+      "item": "Dim Sum",
+      "points": 3
+    },
+    {
+      "_id": {
+        "$oid": "61ae2f32e3250e5ba48432b1"
+      },
+      "item": "French Toast",
+      "points": 2
+    },
+    {
+      "_id": {
+        "$oid": "61ae2f32e3250e5ba48432b2"
+      },
+      "item": "Orange",
+      "points": 1
+    }
+  ],
+  "published": {
+    "$date": "2021-12-06T15:41:38.535Z"
+  },
+  "views": 1,
+  "comments": [],
+  "createdAt": {
+    "$date": "2021-12-06T15:41:38.638Z"
+  },
+  "updatedAt": {
+    "$date": "2021-12-06T16:50:23.973Z"
+  },
+  "__v": 2
+},{
+  "_id": {
+    "$oid": "61ae2f4be3250e5ba48432c3"
+  },
+  "likes": [
+    "dtung"
+  ],
+  "dislikes": [],
+  "name": "Games",
+  "items": [
+    {
+      "_id": {
+        "$oid": "61ae2f4be3250e5ba48432c4"
+      },
+      "item": "Fire Emblem",
+      "points": 5
+    },
+    {
+      "_id": {
+        "$oid": "61ae35c0e3250e5ba48433cb"
+      },
+      "item": "StarCraft",
+      "points": 5
+    },
+    {
+      "_id": {
+        "$oid": "61ae2f4be3250e5ba48432c5"
+      },
+      "item": "Osu",
+      "points": 4
+    },
+    {
+      "_id": {
+        "$oid": "61ae35c0e3250e5ba48433cd"
+      },
+      "item": "Fallout 3",
+      "points": 4
+    },
+    {
+      "_id": {
+        "$oid": "61ae2f4be3250e5ba48432c6"
+      },
+      "item": "Pokemon",
+      "points": 3
+    },
+    {
+      "_id": {
+        "$oid": "61ae35c0e3250e5ba48433cf"
+      },
+      "item": "Civilization II",
+      "points": 3
+    },
+    {
+      "_id": {
+        "$oid": "61ae2f4be3250e5ba48432c7"
+      },
+      "item": "Blackjack",
+      "points": 2
+    },
+    {
+      "_id": {
+        "$oid": "61ae35c0e3250e5ba48433d1"
+      },
+      "item": "Katamari Damacy",
+      "points": 2
+    },
+    {
+      "_id": {
+        "$oid": "61ae2f4be3250e5ba48432c8"
+      },
+      "item": "Monopoly",
+      "points": 1
+    },
+    {
+      "_id": {
+        "$oid": "61ae35c0e3250e5ba48433d3"
+      },
+      "item": "Super Mario World",
+      "points": 1
+    }
+  ],
+  "published": {
+    "$date": "2021-12-06T16:09:36.442Z"
+  },
+  "views": 2,
+  "comments": [],
+  "createdAt": {
+    "$date": "2021-12-06T15:42:03.136Z"
+  },
+  "updatedAt": {
+    "$date": "2021-12-06T16:50:31.541Z"
+  },
+  "__v": 5
+},{
+  "_id": {
+    "$oid": "61ae2f6ae3250e5ba48432d9"
+  },
+  "likes": [
+    "dtung"
+  ],
+  "dislikes": [],
+  "name": "Movies",
+  "items": [
+    {
+      "_id": {
+        "$oid": "61ae2f6ae3250e5ba48432da"
+      },
+      "item": "Fantasia",
+      "points": 5
+    },
+    {
+      "_id": {
+        "$oid": "61ae35dce3250e5ba48433e8"
+      },
+      "item": "Raiders Of The Lost Ark",
+      "points": 5
+    },
+    {
+      "_id": {
+        "$oid": "61ae2f6ae3250e5ba48432db"
+      },
+      "item": "Spirited Away",
+      "points": 4
+    },
+    {
+      "_id": {
+        "$oid": "61ae35dce3250e5ba48433ea"
+      },
+      "item": "Goodfellas",
+      "points": 4
+    },
+    {
+      "_id": {
+        "$oid": "61ae2f6ae3250e5ba48432dc"
+      },
+      "item": "Amadeus",
+      "points": 3
+    },
+    {
+      "_id": {
+        "$oid": "61ae35dce3250e5ba48433ec"
+      },
+      "item": "Airplane!",
+      "points": 3
+    },
+    {
+      "_id": {
+        "$oid": "61ae2f6ae3250e5ba48432dd"
+      },
+      "item": "Forrest Gump",
+      "points": 2
+    },
+    {
+      "_id": {
+        "$oid": "61ae2f6ae3250e5ba48432de"
+      },
+      "item": "Pulp Fiction",
+      "points": 2
+    },
+    {
+      "_id": {
+        "$oid": "61ae35dce3250e5ba48433ef"
+      },
+      "item": "Lawrence Of Arabia",
+      "points": 2
+    }
+  ],
+  "published": {
+    "$date": "2021-12-06T16:10:04.520Z"
+  },
+  "views": 0,
+  "comments": [],
+  "createdAt": {
+    "$date": "2021-12-06T15:42:34.955Z"
+  },
+  "updatedAt": {
+    "$date": "2021-12-06T16:50:32.578Z"
+  },
+  "__v": 3
+},{
+  "_id": {
+    "$oid": "61ae2f7fe3250e5ba48432ef"
+  },
+  "likes": [
+    "dtung"
+  ],
+  "dislikes": [],
+  "name": "Programming Languages",
+  "items": [
+    {
+      "_id": {
+        "$oid": "61ae2f7fe3250e5ba48432f0"
+      },
+      "item": "Python",
+      "points": 5
+    },
+    {
+      "_id": {
+        "$oid": "61ae2f7fe3250e5ba48432f1"
+      },
+      "item": "R",
+      "points": 4
+    },
+    {
+      "_id": {
+        "$oid": "61ae2f7fe3250e5ba48432f2"
+      },
+      "item": "SQL",
+      "points": 3
+    },
+    {
+      "_id": {
+        "$oid": "61ae2f7fe3250e5ba48432f3"
+      },
+      "item": "Javascript",
+      "points": 2
+    },
+    {
+      "_id": {
+        "$oid": "61ae2f7fe3250e5ba48432f4"
+      },
+      "item": "MATLAB",
+      "points": 1
+    }
+  ],
+  "published": {
+    "$date": "2021-12-06T15:42:55.684Z"
+  },
+  "views": 0,
+  "comments": [],
+  "createdAt": {
+    "$date": "2021-12-06T15:42:55.827Z"
+  },
+  "updatedAt": {
+    "$date": "2021-12-06T16:50:33.382Z"
+  },
+  "__v": 1
+},{
+  "_id": {
+    "$oid": "61ae2f9ce3250e5ba4843305"
+  },
+  "likes": [
+    "dtung",
+    "shmoeyjoey"
+  ],
+  "dislikes": [],
+  "name": "Professional Sports Teams",
+  "items": [
+    {
+      "_id": {
+        "$oid": "61ae2f9ce3250e5ba4843308"
+      },
+      "item": "New York Islanders",
+      "points": 6
+    },
+    {
+      "_id": {
+        "$oid": "61ae2f9ce3250e5ba4843306"
+      },
+      "item": "Los Angeles Rams",
+      "points": 5
+    },
+    {
+      "_id": {
+        "$oid": "61ae364ee3250e5ba484341b"
+      },
+      "item": "New York Yankees",
+      "points": 5
+    },
+    {
+      "_id": {
+        "$oid": "61ae2f9ce3250e5ba4843307"
+      },
+      "item": "Toronto Blue Jays",
+      "points": 4
+    },
+    {
+      "_id": {
+        "$oid": "61ae364ee3250e5ba484341d"
+      },
+      "item": "New York Knicks",
+      "points": 4
+    },
+    {
+      "_id": {
+        "$oid": "61ae2f9ce3250e5ba4843309"
+      },
+      "item": "Phoenix Suns",
+      "points": 2
+    },
+    {
+      "_id": {
+        "$oid": "61ae364ee3250e5ba484341f"
+      },
+      "item": "Dallas Stars",
+      "points": 2
+    },
+    {
+      "_id": {
+        "$oid": "61ae2f9ce3250e5ba484330a"
+      },
+      "item": "Manchester City",
+      "points": 1
+    },
+    {
+      "_id": {
+        "$oid": "61ae364ee3250e5ba4843421"
+      },
+      "item": "Texas Rangers",
+      "points": 1
+    }
+  ],
+  "published": {
+    "$date": "2021-12-06T16:11:58.340Z"
+  },
+  "views": 3,
+  "comments": [],
+  "createdAt": {
+    "$date": "2021-12-06T15:43:24.830Z"
+  },
+  "updatedAt": {
+    "$date": "2021-12-06T19:05:34.916Z"
+  },
+  "__v": 9
+},{
+  "_id": {
+    "$oid": "61ae2fc1e3250e5ba484331b"
+  },
+  "likes": [
+    "dtung"
+  ],
+  "dislikes": [],
+  "name": "TV Shows",
+  "items": [
+    {
+      "_id": {
+        "$oid": "61ae2fc1e3250e5ba484331c"
+      },
+      "item": "Shark Tank",
+      "points": 5
+    },
+    {
+      "_id": {
+        "$oid": "61ae2fc1e3250e5ba484331d"
+      },
+      "item": "K-On",
+      "points": 4
+    },
+    {
+      "_id": {
+        "$oid": "61ae2fc1e3250e5ba484331e"
+      },
+      "item": "The Amazing Race",
+      "points": 3
+    },
+    {
+      "_id": {
+        "$oid": "61ae2fc1e3250e5ba484331f"
+      },
+      "item": "Star Trek",
+      "points": 2
+    },
+    {
+      "_id": {
+        "$oid": "61ae2fc1e3250e5ba4843320"
+      },
+      "item": "Hell's Kitchen",
+      "points": 1
+    }
+  ],
+  "published": {
+    "$date": "2021-12-06T15:44:01.005Z"
+  },
+  "views": 3,
+  "comments": [],
+  "createdAt": {
+    "$date": "2021-12-06T15:44:01.199Z"
+  },
+  "updatedAt": {
+    "$date": "2021-12-06T17:48:28.255Z"
+  },
+  "__v": 4
+},{
+  "_id": {
+    "$oid": "61ae3605e3250e5ba4843400"
+  },
+  "likes": [],
+  "dislikes": [
+    "dtung"
+  ],
+  "name": "Pink Floyd Songs",
+  "items": [
+    {
+      "_id": {
+        "$oid": "61ae3605e3250e5ba4843401"
+      },
+      "item": "Shine On You Crazy Diamond",
+      "points": 5
+    },
+    {
+      "_id": {
+        "$oid": "61ae3605e3250e5ba4843402"
+      },
+      "item": "Comfortably Numb",
+      "points": 4
+    },
+    {
+      "_id": {
+        "$oid": "61ae3605e3250e5ba4843403"
+      },
+      "item": "Pigs (Three Different Ones)",
+      "points": 3
+    },
+    {
+      "_id": {
+        "$oid": "61ae3605e3250e5ba4843404"
+      },
+      "item": "Time",
+      "points": 2
+    },
+    {
+      "_id": {
+        "$oid": "61ae3605e3250e5ba4843405"
+      },
+      "item": "Echoes (Live from Pompeii)",
+      "points": 1
+    }
+  ],
+  "published": {
+    "$date": "2021-12-06T16:10:45.730Z"
+  },
+  "views": 8,
+  "comments": [],
+  "createdAt": {
+    "$date": "2021-12-06T16:10:45.890Z"
+  },
+  "updatedAt": {
+    "$date": "2021-12-06T17:59:35.599Z"
+  },
+  "__v": 9
+}]

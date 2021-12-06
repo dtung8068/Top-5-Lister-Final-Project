@@ -1,0 +1,470 @@
+[{
+  "_id": {
+    "$oid": "61ae2e80e3250e5ba484325c"
+  },
+  "items": [
+    "Chicken",
+    "Lamb",
+    "Cow",
+    "Pig",
+    "Fish"
+  ],
+  "likes": [],
+  "dislikes": [],
+  "name": "Animals To Eat",
+  "ownerUsername": "dtung",
+  "published": {
+    "$date": "2021-12-06T15:39:20.990Z"
+  },
+  "views": 18,
+  "comments": [],
+  "createdAt": {
+    "$date": "2021-12-06T15:38:40.052Z"
+  },
+  "updatedAt": {
+    "$date": "2021-12-06T17:59:28.048Z"
+  },
+  "__v": 1
+},{
+  "_id": {
+    "$oid": "61ae2eaee3250e5ba4843272"
+  },
+  "items": [
+    "Beat The Dealer",
+    "The World Of Yesterday",
+    "How To Win Friends And Influence People",
+    "A Brief History Of Time",
+    "The Great Gatsby"
+  ],
+  "likes": [],
+  "dislikes": [],
+  "name": "Books",
+  "ownerUsername": "dtung",
+  "published": {
+    "$date": "2021-12-06T15:40:11.197Z"
+  },
+  "views": 5,
+  "comments": [],
+  "createdAt": {
+    "$date": "2021-12-06T15:39:26.051Z"
+  },
+  "updatedAt": {
+    "$date": "2021-12-06T17:52:00.857Z"
+  },
+  "__v": 1
+},{
+  "_id": {
+    "$oid": "61ae2edee3250e5ba4843288"
+  },
+  "items": [
+    "Japan",
+    "Germany",
+    "South Korea",
+    "Vietnam",
+    "Thailand"
+  ],
+  "likes": [],
+  "dislikes": [],
+  "name": "Countries You'd Like To Visit",
+  "ownerUsername": "dtung",
+  "published": {
+    "$date": "2021-12-06T15:41:08.452Z"
+  },
+  "views": 1,
+  "comments": [],
+  "createdAt": {
+    "$date": "2021-12-06T15:40:14.742Z"
+  },
+  "updatedAt": {
+    "$date": "2021-12-06T17:50:49.457Z"
+  },
+  "__v": 1
+},{
+  "_id": {
+    "$oid": "61ae2f1de3250e5ba484329e"
+  },
+  "items": [
+    "Fried Rice",
+    "Sushi",
+    "Dim Sum",
+    "French Toast",
+    "Orange"
+  ],
+  "likes": [],
+  "dislikes": [],
+  "name": "Foods",
+  "ownerUsername": "dtung",
+  "published": {
+    "$date": "2021-12-06T15:41:38.535Z"
+  },
+  "views": 3,
+  "comments": [],
+  "createdAt": {
+    "$date": "2021-12-06T15:41:17.022Z"
+  },
+  "updatedAt": {
+    "$date": "2021-12-06T17:59:10.356Z"
+  },
+  "__v": 1
+},{
+  "_id": {
+    "$oid": "61ae2f37e3250e5ba48432b4"
+  },
+  "items": [
+    "Fire Emblem",
+    "Osu",
+    "Pokemon",
+    "Blackjack",
+    "Monopoly"
+  ],
+  "likes": [
+    "shmoeyjoey"
+  ],
+  "dislikes": [],
+  "name": "Games",
+  "ownerUsername": "dtung",
+  "published": {
+    "$date": "2021-12-06T15:42:03.023Z"
+  },
+  "views": 4,
+  "comments": [],
+  "createdAt": {
+    "$date": "2021-12-06T15:41:43.808Z"
+  },
+  "updatedAt": {
+    "$date": "2021-12-06T18:56:46.341Z"
+  },
+  "__v": 2
+},{
+  "_id": {
+    "$oid": "61ae2f4fe3250e5ba48432ca"
+  },
+  "items": [
+    "Fantasia",
+    "Spirited Away",
+    "Amadeus",
+    "Forrest Gump",
+    "Pulp Fiction"
+  ],
+  "likes": [
+    "dtung"
+  ],
+  "dislikes": [],
+  "name": "Movies",
+  "ownerUsername": "dtung",
+  "published": {
+    "$date": "2021-12-06T15:42:34.826Z"
+  },
+  "views": 7,
+  "comments": [],
+  "createdAt": {
+    "$date": "2021-12-06T15:42:07.052Z"
+  },
+  "updatedAt": {
+    "$date": "2021-12-06T17:59:01.959Z"
+  },
+  "__v": 2
+},{
+  "_id": {
+    "$oid": "61ae2f6fe3250e5ba48432e0"
+  },
+  "items": [
+    "Python",
+    "R",
+    "SQL",
+    "Javascript",
+    "MATLAB"
+  ],
+  "likes": [],
+  "dislikes": [],
+  "name": "Programming Languages",
+  "ownerUsername": "dtung",
+  "published": {
+    "$date": "2021-12-06T15:42:55.684Z"
+  },
+  "views": 3,
+  "comments": [],
+  "createdAt": {
+    "$date": "2021-12-06T15:42:39.153Z"
+  },
+  "updatedAt": {
+    "$date": "2021-12-06T16:52:23.356Z"
+  },
+  "__v": 1
+},{
+  "_id": {
+    "$oid": "61ae2f83e3250e5ba48432f6"
+  },
+  "items": [
+    "Los Angeles Rams",
+    "Toronto Blue Jays",
+    "New York Islanders",
+    "Phoenix Suns",
+    "Manchester City"
+  ],
+  "likes": [],
+  "dislikes": [],
+  "name": "Professional Sports Teams",
+  "ownerUsername": "dtung",
+  "published": {
+    "$date": "2021-12-06T15:43:24.665Z"
+  },
+  "views": 0,
+  "comments": [],
+  "createdAt": {
+    "$date": "2021-12-06T15:42:59.202Z"
+  },
+  "updatedAt": {
+    "$date": "2021-12-06T15:43:24.693Z"
+  },
+  "__v": 1
+},{
+  "_id": {
+    "$oid": "61ae2fa2e3250e5ba484330c"
+  },
+  "items": [
+    "Shark Tank",
+    "K-On",
+    "The Amazing Race",
+    "Star Trek",
+    "Hell's Kitchen"
+  ],
+  "likes": [],
+  "dislikes": [],
+  "name": "TV Shows",
+  "ownerUsername": "dtung",
+  "published": {
+    "$date": "2021-12-06T15:44:01.005Z"
+  },
+  "views": 1,
+  "comments": [],
+  "createdAt": {
+    "$date": "2021-12-06T15:43:30.126Z"
+  },
+  "updatedAt": {
+    "$date": "2021-12-06T17:52:28.261Z"
+  },
+  "__v": 1
+},{
+  "_id": {
+    "$oid": "61ae2fcbe3250e5ba4843322"
+  },
+  "items": [
+    "Minnesota Timberwolves",
+    "Arizona Cardinals",
+    "San Diego Padres",
+    "Arizona Coyotes",
+    "United States Men's National Soccer Team"
+  ],
+  "likes": [],
+  "dislikes": [],
+  "name": "Poverty Sports Franchises",
+  "ownerUsername": "dtung",
+  "published": {
+    "$date": "1970-01-01T00:00:00Z"
+  },
+  "views": 0,
+  "comments": [],
+  "createdAt": {
+    "$date": "2021-12-06T15:44:11.804Z"
+  },
+  "updatedAt": {
+    "$date": "2021-12-06T16:39:06.779Z"
+  },
+  "__v": 4
+},{
+  "_id": {
+    "$oid": "61ae3555e3250e5ba484339e"
+  },
+  "items": [
+    "Lobster",
+    "Cow",
+    "Pig",
+    "Chicken",
+    "Salmon"
+  ],
+  "likes": [
+    "shmoeyjoey",
+    "dtung"
+  ],
+  "dislikes": [],
+  "name": "Animals To Eat",
+  "ownerUsername": "shmoeyjoey",
+  "published": {
+    "$date": "2021-12-06T16:08:08.597Z"
+  },
+  "views": 29,
+  "comments": [
+    {
+      "_id": {
+        "$oid": "61ae3763e3250e5ba484346a"
+      },
+      "name": "shmoeyjoey",
+      "comment": "I'm a vegetarian."
+    },
+    {
+      "_id": {
+        "$oid": "61ae3e32e3250e5ba484376d"
+      },
+      "name": "dtung",
+      "comment": "I'm not!"
+    },
+    {
+      "_id": {
+        "$oid": "61ae5ff86a16102c8019389a"
+      },
+      "name": "shmoeyjoey",
+      "comment": "Poor food choices."
+    }
+  ],
+  "createdAt": {
+    "$date": "2021-12-06T16:07:49.524Z"
+  },
+  "updatedAt": {
+    "$date": "2021-12-06T19:09:44.798Z"
+  },
+  "__v": 36
+},{
+  "_id": {
+    "$oid": "61ae35a5e3250e5ba48433b8"
+  },
+  "items": [
+    "StarCraft",
+    "Fallout 3",
+    "Civilization II",
+    "Katamari Damacy",
+    "Super Mario World"
+  ],
+  "likes": [],
+  "dislikes": [
+    "shmoeyjoey"
+  ],
+  "name": "Games",
+  "ownerUsername": "shmoeyjoey",
+  "published": {
+    "$date": "2021-12-06T16:09:36.442Z"
+  },
+  "views": 5,
+  "comments": [],
+  "createdAt": {
+    "$date": "2021-12-06T16:09:09.428Z"
+  },
+  "updatedAt": {
+    "$date": "2021-12-06T18:56:39.546Z"
+  },
+  "__v": 4
+},{
+  "_id": {
+    "$oid": "61ae35c4e3250e5ba48433d5"
+  },
+  "items": [
+    "Raiders Of The Lost Ark",
+    "Goodfellas",
+    "Airplane!",
+    "Lawrence Of Arabia",
+    "Pulp Fiction"
+  ],
+  "likes": [
+    "shmoeyjoey"
+  ],
+  "dislikes": [],
+  "name": "Movies",
+  "ownerUsername": "shmoeyjoey",
+  "published": {
+    "$date": "2021-12-06T16:10:04.520Z"
+  },
+  "views": 0,
+  "comments": [],
+  "createdAt": {
+    "$date": "2021-12-06T16:09:40.200Z"
+  },
+  "updatedAt": {
+    "$date": "2021-12-06T16:17:07.866Z"
+  },
+  "__v": 2
+},{
+  "_id": {
+    "$oid": "61ae35e3e3250e5ba48433f1"
+  },
+  "items": [
+    "Shine On You Crazy Diamond",
+    "Comfortably Numb",
+    "Pigs (Three Different Ones)",
+    "Time",
+    "Echoes (Live from Pompeii)"
+  ],
+  "likes": [
+    "shmoeyjoey"
+  ],
+  "dislikes": [],
+  "name": "Pink Floyd Songs",
+  "ownerUsername": "shmoeyjoey",
+  "published": {
+    "$date": "2021-12-06T16:10:45.730Z"
+  },
+  "views": 0,
+  "comments": [],
+  "createdAt": {
+    "$date": "2021-12-06T16:10:11.186Z"
+  },
+  "updatedAt": {
+    "$date": "2021-12-06T16:17:10.479Z"
+  },
+  "__v": 2
+},{
+  "_id": {
+    "$oid": "61ae362ae3250e5ba4843407"
+  },
+  "items": [
+    "New York Yankees",
+    "New York Knicks",
+    "New York Islanders",
+    "Dallas Stars",
+    "Texas Rangers"
+  ],
+  "likes": [
+    "shmoeyjoey"
+  ],
+  "dislikes": [],
+  "name": "Professional Sports Teams",
+  "ownerUsername": "shmoeyjoey",
+  "published": {
+    "$date": "2021-12-06T16:11:58.340Z"
+  },
+  "views": 3,
+  "comments": [],
+  "createdAt": {
+    "$date": "2021-12-06T16:11:22.561Z"
+  },
+  "updatedAt": {
+    "$date": "2021-12-06T19:05:15.002Z"
+  },
+  "__v": 11
+},{
+  "_id": {
+    "$oid": "61ae5bf56a16102c80193623"
+  },
+  "items": [
+    "Sonic 3 And Knuckles",
+    "Sonic Mania",
+    "Sonic Adventure 2",
+    "Sonic Generations",
+    "Sonic The Hedgehog 2"
+  ],
+  "likes": [],
+  "dislikes": [],
+  "name": "Games With Sonic",
+  "ownerUsername": "shmoeyjoey",
+  "published": {
+    "$date": "1970-01-01T00:00:00Z"
+  },
+  "views": 0,
+  "comments": [],
+  "createdAt": {
+    "$date": "2021-12-06T18:52:37.915Z"
+  },
+  "updatedAt": {
+    "$date": "2021-12-06T18:53:51.041Z"
+  },
+  "__v": 2
+}]
