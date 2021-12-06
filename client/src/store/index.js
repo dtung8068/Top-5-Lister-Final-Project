@@ -249,7 +249,13 @@ function GlobalStoreContextProvider(props) {
                         response = await api.getTop5ListPairs();
                         if (response.data.success) {
                             let pairsArray = response.data.idNamePairs;
-                            if(top5List.published !== "1970-01-01T00:00:00.000Z") {
+                            let list = "";
+                            for(let i = 0; i < pairsArray.length; i++) {
+                                if(top5List.name === pairsArray[i].name) {
+                                    list = pairsArray[i];
+                                }
+                            }
+                            if(list.published !== "1970-01-01T00:00:00.000Z") {
                                 let counter = 0;
                                 for(let i = 0; i < pairsArray.length; i++) {
                                     if(pairsArray[i].name === top5List.name) {
@@ -521,7 +527,22 @@ function GlobalStoreContextProvider(props) {
         store.loadSearchPairs(store.searchText, currentIcon);
     }
     store.loadSearchPairs = async function (text, currentIcon) {
-        const response = await api.getTop5ListPairs();
+        if(currentIcon === "Community") {
+            const response = await api.getCommunityListPairs();
+            if(response.data.success) {
+                let pairsArray = response.data.idNamePairs;
+                console.log(pairsArray);
+                storeReducer({
+                    type: GlobalStoreActionType.LOAD_SEARCH_NAME_PAIRS,
+                    payload: {
+                        idNamePairs: pairsArray,
+                        currentIcon: currentIcon,
+                    }
+                });
+            }
+        }
+        else {
+            const response = await api.getTop5ListPairs();
         if (response.data.success) {
             let pairsArray = response.data.idNamePairs;
             //Splice by Icon. 
@@ -574,6 +595,7 @@ function GlobalStoreContextProvider(props) {
             console.log("API FAILED TO GET THE LIST PAIRS");
         }
     }
+}
 
     // THE FOLLOWING 5 FUNCTIONS ARE FOR COORDINATING THE DELETION
     // OF A LIST, WHICH INCLUDES USING A VERIFICATION MODAL. THE
@@ -599,7 +621,7 @@ function GlobalStoreContextProvider(props) {
         let response = await api.deleteTop5ListById(listToDelete._id);
         if (response.data.success) {
             response = await api.getCommunityListPairs();
-            if(response.data.success) {
+            if(response.data.success && listToDelete.published !== "1970-01-01T00:00:00.000Z") {
                 let communityListPairs = response.data.idNamePairs;
                 let list = "";
                 for(let i = 0; i < communityListPairs.length; i++) {
