@@ -51,7 +51,7 @@ function MenuBar() {
     }
     const handleSort = (event) => {
         handleMenuClose();
-        store.sort(event.target.textContent);
+        store.handleSort(event.target.textContent);
     }
     if(!auth.loggedIn) {
         return null

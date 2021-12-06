@@ -22,10 +22,21 @@ function Statusbar() {
         text = "Your Lists";
     }
     if (store.currentIcon === "All Lists") {
-        text = "All Lists";
+        if(store.searchText === "") {
+            text = "All Lists";
+        }
+        else {
+            text = store.searchText + " Lists";
+        }
     }
     if (store.currentIcon === "Users") {
-        text = "User Lists";
+        if(store.searchText === "") {
+            text = "User Lists";
+        }
+        else {
+            text = store.searchText + " Lists";
+        }
+
     }
     if (store.currentIcon === "Community") {
         text = "Community Lists";

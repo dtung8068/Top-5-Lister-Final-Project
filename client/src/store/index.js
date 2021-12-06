@@ -49,6 +49,7 @@ function GlobalStoreContextProvider(props) {
         listMarkedForDeletion: null,
         listMarkedForDeletionName: null,
         searchText: "",
+        sortMethod: "",
     });
     const history = useHistory()
     // SINCE WE'VE WRAPPED THE STORE IN THE AUTH CONTEXT WE CAN ACCESS THE USER HERE
@@ -70,6 +71,7 @@ function GlobalStoreContextProvider(props) {
                     listMarkedForDeletionName: null,
                     currentIcon: store.currentIcon,
                     searchText: store.searchText,
+                    sortMethod: store.sortMethod,
                 });
             }
             // STOP EDITING THE CURRENT LIST
@@ -84,6 +86,7 @@ function GlobalStoreContextProvider(props) {
                     listMarkedForDeletionName: null,
                     currentIcon: store.currentIcon,
                     searchText: store.searchText,
+                    sortMethod: store.sortMethod,
                 })
             }
             // CREATE A NEW LIST
@@ -98,6 +101,7 @@ function GlobalStoreContextProvider(props) {
                     listMarkedForDeletionName: null,
                     currentIcon: store.currentIcon,
                     searchText: store.searchText,
+                    sortMethod: store.sortMethod,
                 })
             }
             // GET ALL THE LISTS SO WE CAN PRESENT THEM
@@ -112,6 +116,7 @@ function GlobalStoreContextProvider(props) {
                     listMarkedForDeletionName: null,
                     currentIcon: store.currentIcon,
                     searchText: store.searchText,
+                    sortMethod: store.sortMethod,
                 });
             }
             case GlobalStoreActionType.LOAD_SEARCH_NAME_PAIRS: {
@@ -124,7 +129,8 @@ function GlobalStoreContextProvider(props) {
                     listMarkedForDeletion: null,
                     listMarkedForDeletionName: null,
                     currentIcon: payload.currentIcon,
-                    searchText: store.searchText,
+                    searchText: payload.searchText,
+                    sortMethod: payload.sortMethod,
                 });
             }
             // PREPARE TO DELETE A LIST
@@ -139,6 +145,7 @@ function GlobalStoreContextProvider(props) {
                     listMarkedForDeletionName: payload.name,
                     currentIcon: store.currentIcon,
                     searchText: store.searchText,
+                    sortMethod: store.sortMethod,
                 });
             }
             // PREPARE TO DELETE A LIST
@@ -153,6 +160,7 @@ function GlobalStoreContextProvider(props) {
                     listMarkedForDeletionName: null,
                     currentIcon: store.currentIcon,
                     searchText: store.searchText,
+                    sortMethod: store.sortMethod,
                 });
             }
             // UPDATE A LIST
@@ -167,6 +175,7 @@ function GlobalStoreContextProvider(props) {
                     listMarkedForDeletionName: null,
                     currentIcon: store.currentIcon,
                     searchText: store.searchText,
+                    sortMethod: store.sortMethod,
                 });
             }
             // START EDITING A LIST ITEM
@@ -181,6 +190,7 @@ function GlobalStoreContextProvider(props) {
                     listMarkedForDeletionName: null,
                     currentIcon: store.currentIcon,
                     searchText: store.searchText,
+                    sortMethod: store.sortMethod,
                 });
             }
             // START EDITING A LIST NAME
@@ -195,6 +205,7 @@ function GlobalStoreContextProvider(props) {
                     listMarkedForDeletionName: null,
                     currentIcon: store.currentIcon,
                     searchText: store.searchText,
+                    sortMethod: store.sortMethod,
                 });
             }
             //Set Current Icon. 
@@ -209,6 +220,7 @@ function GlobalStoreContextProvider(props) {
                     listMarkedForDeletionName: store.listMarkedForDeletionName,
                     currentIcon: payload,
                     searchText: store.searchText,
+                    sortMethod: store.sortMethod,
                 });
             }
             //Set Search Text.  
@@ -223,6 +235,21 @@ function GlobalStoreContextProvider(props) {
                     listMarkedForDeletionName: store.listMarkedForDeletionName,
                     currentIcon: store.currentIcon,
                     searchText: payload,
+                    sortMethod: store.sortMethod,
+                });
+            }
+            case GlobalStoreActionType.SET_SORT_METHOD: {
+                return setStore({
+                    idNamePairs: store.idNamePairs,
+                    currentList: store.currentList,
+                    newListCounter: store.newListCounter,
+                    isListNameEditActive: store.isListNameEditActive,
+                    isItemEditActive: store.isItemEditActive,
+                    listMarkedForDeletion: store.listMarkedForDeletion,
+                    listMarkedForDeletionName: store.listMarkedForDeletionName,
+                    currentIcon: store.currentIcon,
+                    searchText: store.searchText,
+                    sortMethod: payload,
                 });
             }
             default:
@@ -381,6 +408,14 @@ function GlobalStoreContextProvider(props) {
                                         i--;
                                     }
                                 }
+                                for(let i = 0; i < pairsArray.length; i++) {
+                                    let temp = pairsArray[i].name.toLowerCase();
+                                    if(!temp.startsWith(store.searchText.toLowerCase())) {
+                                        pairsArray.splice(i, 1);
+                                        i--;
+                                    }
+                                }
+                                pairsArray = store.sort(pairsArray, store.sortMethod);
                                 storeReducer({
                                     type: GlobalStoreActionType.CHANGE_LIST_NAME,
                                     payload: {
@@ -409,6 +444,28 @@ function GlobalStoreContextProvider(props) {
                                         }
                                     }
                                 }
+                                if(store.searchText !== "") {
+                                    if(store.currentIcon === "Home" || store.currentIcon === "All Lists" || store.currentIcon === "Community") {
+                                        for(let i = 0; i < pairsArray.length; i++) {
+                                            let temp = pairsArray[i].name.toLowerCase();
+                                            if(!temp.startsWith(store.searchText.toLowerCase())) {
+                                                pairsArray.splice(i, 1);
+                                                i--;
+                                            }
+                                        }
+                                    }
+                                    else if(store.currentIcon === "Users") {
+                                        for(let i = 0; i < pairsArray.length; i++) {
+                                            let temp = pairsArray[i].ownerUsername.toLowerCase();
+                                            if(!temp.startsWith(store.searchText.toLowerCase())) {
+                                                pairsArray.splice(i, 1);
+                                                i--;
+                                            }
+                                        }
+                                    }
+                    
+                                }
+                                pairsArray = store.sort(pairsArray, store.sortMethod);
                                 storeReducer({
                                     type: GlobalStoreActionType.CHANGE_LIST_NAME,
                                     payload: {
@@ -506,58 +563,32 @@ function GlobalStoreContextProvider(props) {
             console.log("API FAILED TO GET THE LIST PAIRS");
         }
     }
-    store.sort = function (text) {
+    store.handleSort = function (text) {
+        storeReducer({
+            type: GlobalStoreActionType.SET_SORT_METHOD,
+            payload: text
+        });
+        store.loadSearchPairs(store.searchText, store.currentIcon, text);
+    }
+    store.sort = function (array, text) {
         switch(text) {
             case "Publish Date (Newest)": {
-                let temp = store.idNamePairs;
-                temp = temp.sort((a, b) => new Date(b.published) - new Date(a.published));
-                storeReducer({
-                    type: GlobalStoreActionType.LOAD_ID_NAME_PAIRS,
-                    payload: temp
-                });
-                break;
+                return array.sort((a, b) => new Date(b.published) - new Date(a.published));
             }
             case "Publish Date (Oldest)": {
-                let temp = store.idNamePairs;
-                temp = temp.sort((a, b) => new Date(a.published) - new Date(b.published));
-                storeReducer({
-                    type: GlobalStoreActionType.LOAD_ID_NAME_PAIRS,
-                    payload: temp
-                });
-                break;
+                return array.sort((a, b) => new Date(a.published) - new Date(b.published));
             }
             case "Views": {
-                let temp = store.idNamePairs;
-                temp = temp.sort((a, b) => b.views - a.views);
-                storeReducer({
-                    type: GlobalStoreActionType.LOAD_ID_NAME_PAIRS,
-                    payload: temp
-                });
-                break;
+                return array.sort((a, b) => b.views - a.views);
             }
             case "Likes": {
-                let temp = store.idNamePairs;
-                temp = temp.sort((a, b) => b.likes.length - a.likes.length);
-                storeReducer({
-                    type: GlobalStoreActionType.LOAD_ID_NAME_PAIRS,
-                    payload: temp
-                });
-                break;
+                return array.sort((a, b) => b.likes.length - a.likes.length);
             }
             case "Dislikes": {
-                let temp = store.idNamePairs;
-                temp = temp.sort((a, b) => b.dislikes.length - a.dislikes.length);
-                storeReducer({
-                    type: GlobalStoreActionType.LOAD_ID_NAME_PAIRS,
-                    payload: temp
-                });
-                break;
+                return array.sort((a, b) => b.dislikes.length - a.dislikes.length);
             }
             default: {
-                storeReducer({
-                    type: GlobalStoreActionType.LOAD_ID_NAME_PAIRS,
-                    payload: store.idNamePairs,
-                });
+                return array;
             }
         }
     }
@@ -566,26 +597,35 @@ function GlobalStoreContextProvider(props) {
             type: GlobalStoreActionType.SET_SEARCH_TEXT,
             payload: text
         });
-        store.loadSearchPairs(text, store.currentIcon);
+        store.loadSearchPairs(text, store.currentIcon, store.sortMethod);
     }
     store.updateCurrentIcon = function (currentIcon) {
         storeReducer({
             type: GlobalStoreActionType.SET_CURRENT_ICON,
             payload: currentIcon
         });
-        store.loadSearchPairs(store.searchText, currentIcon);
+        store.loadSearchPairs(store.searchText, currentIcon, store.sortMethod);
     }
-    store.loadSearchPairs = async function (text, currentIcon) {
+    store.loadSearchPairs = async function (text, currentIcon, sortMethod) {
         if(currentIcon === "Community") {
             const response = await api.getCommunityListPairs();
             if(response.data.success) {
                 let pairsArray = response.data.idNamePairs;
-                console.log(pairsArray);
+                for(let i = 0; i < pairsArray.length; i++) {
+                    let temp = pairsArray[i].name.toLowerCase();
+                    if(!temp.startsWith(text.toLowerCase())) {
+                        pairsArray.splice(i, 1);
+                        i--;
+                    }
+                }
+                pairsArray = store.sort(pairsArray, sortMethod);
                 storeReducer({
                     type: GlobalStoreActionType.LOAD_SEARCH_NAME_PAIRS,
                     payload: {
                         idNamePairs: pairsArray,
                         currentIcon: currentIcon,
+                        searchText: text,
+                        sortMethod: sortMethod,
                     }
                 });
             }
@@ -615,7 +655,8 @@ function GlobalStoreContextProvider(props) {
             if(text !== "") {
                 if(currentIcon === "Home" || currentIcon === "All Lists" || currentIcon === "Community") {
                     for(let i = 0; i < pairsArray.length; i++) {
-                        if(!pairsArray[i].name.startsWith(text)) {
+                        let temp = pairsArray[i].name.toLowerCase();
+                        if(!temp.startsWith(text.toLowerCase())) {
                             pairsArray.splice(i, 1);
                             i--;
                         }
@@ -623,19 +664,22 @@ function GlobalStoreContextProvider(props) {
                 }
                 else if(currentIcon === "Users") {
                     for(let i = 0; i < pairsArray.length; i++) {
-                        if(!pairsArray[i].ownerUsername.startsWith(text)) {
+                        let temp = pairsArray[i].ownerUsername.toLowerCase();
+                        if(!temp.startsWith(text.toLowerCase())) {
                             pairsArray.splice(i, 1);
                             i--;
                         }
                     }
                 }
-
             }
+            pairsArray = store.sort(pairsArray, sortMethod);
             storeReducer({
                 type: GlobalStoreActionType.LOAD_SEARCH_NAME_PAIRS,
                 payload: {
                     idNamePairs: pairsArray,
                     currentIcon: currentIcon,
+                    searchText: text,
+                    sortMethod: sortMethod,
                 }
             });
             

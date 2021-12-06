@@ -21,8 +21,8 @@ getLoggedIn = async (req, res) => {
 
 registerUser = async (req, res) => {
     try {
-        const { firstName, lastName, username, password, passwordVerify } = req.body;
-        if (!firstName || !lastName || !username || !password || !passwordVerify) {
+        const { firstName, lastName, username, email, password, passwordVerify } = req.body;
+        if (!firstName || !lastName || !username || !email || !password || !passwordVerify) {
             return res
                 .status(400)
                 .json({ errorMessage: "Please enter all required fields." });
@@ -50,12 +50,21 @@ registerUser = async (req, res) => {
                     errorMessage: "An account with this username already exists."
                 });
         }
+        const existingUser2 = await User.findOne({ email: email });
+        if (existingUser2) {
+            return res
+                .status(400)
+                .json({
+                    success: false,
+                    errorMessage: "An account with this email already exists."
+                });
+        }
         const saltRounds = 10;
         const salt = await bcrypt.genSalt(saltRounds);
         const passwordHash = await bcrypt.hash(password, salt);
 
         const newUser = new User({
-            firstName, lastName, username, passwordHash
+            firstName, lastName, username, email, passwordHash
         });
         const savedUser = await newUser.save();
 
