@@ -128,6 +128,14 @@ function ListCard(props) {
         fontSize:'32pt'}}>
     </ThumbDownOffAltIcon>
     </ListItemIcon>
+    let textField = <ListItemIcon>
+    <TextField onChange={handleUpdateText}
+onKeyPress={handleKeyPress}
+value = {text}
+        style={{
+            width: 370,
+        }} id="outlined-basic" label="Search" variant="outlined" />
+    </ListItemIcon>
     if(auth.guest) {
         likeButton = <ListItemIcon>
         <ThumbUpOffAltIcon className="menuIconDisabled" style={{
@@ -142,6 +150,12 @@ function ListCard(props) {
             display: 'flex',
             fontSize:'32pt'}}>
         </ThumbDownOffAltIcon>
+        </ListItemIcon>
+        textField = <ListItemIcon>
+        <TextField disabled className="menuIconDisabled" onChange={handleUpdateText}
+            style={{
+                width: 370,
+            }} id="outlined-basic" label="Search" variant="outlined" />
         </ListItemIcon>
     }
     if(idNamePair.likes.includes(auth.user.username)) {
@@ -562,14 +576,7 @@ function ListCard(props) {
                         username={item.name}
                         comment={item.comment}/>
                     ))}
-        <ListItemIcon>
-        <TextField onChange={handleUpdateText}
-    onKeyPress={handleKeyPress}
-    value = {text}
-            style={{
-                width: 370,
-            }} id="outlined-basic" label="Search" variant="outlined" />
-        </ListItemIcon>
+        {textField}
     </List>
 </Grid>
         <ListItem id={idNamePair._id}
@@ -683,14 +690,7 @@ function ListCard(props) {
                         username={item.name}
                         comment={item.comment}/>
                     ))}
-        <ListItemIcon>
-        <TextField onChange={handleUpdateText}
-    onKeyPress={handleKeyPress}
-    value = {text}
-            style={{
-                width: 370,
-            }} id="outlined-basic" label="Search" variant="outlined" />
-        </ListItemIcon>
+        {textField}
     </List>
 </Grid>
         <ListItem id={idNamePair._id}
