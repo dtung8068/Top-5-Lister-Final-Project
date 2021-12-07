@@ -90,8 +90,8 @@ registerUser = async (req, res) => {
 }
 loginUser = async (req, res) => {
     try {
-        const { username, password} = req.body;
-        if (!username || !password) {
+        const { username, email, password} = req.body;
+        if (!username || !email || !password) {
             return res
                 .status(400)
                 .json({ errorMessage: "Please enter all required fields." });
@@ -103,6 +103,15 @@ loginUser = async (req, res) => {
                 .json({
                     success: false,
                     errorMessage: "Username Not Found. Create an Account. "
+                })
+        }
+        const existingUser2 = await User.findOne({ email: email });
+        if(!existingUser2) {
+            return res
+                .status(400)
+                .json({
+                    success: false,
+                    errorMessage: "Email Not Found. Create an Account. "
                 })
         }
         const passwordCorrect = await bcrypt.compare(password, existingUser.passwordHash);

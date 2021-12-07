@@ -105,16 +105,7 @@ function AuthContextProvider(props) {
         try {
             const response = await api.registerUser(userData);      
             if (response.status === 200) {
-                authReducer({
-                    type: AuthActionType.REGISTER_USER,
-                    payload: {
-                        user: response.data.user, 
-                        errorMessage: null,
-                        guest: false,
-                    }
-                })
-                history.push("/");
-                store.loadIdNamePairs();
+                history.push("/login");
             }
         } catch (err) {
             try {
